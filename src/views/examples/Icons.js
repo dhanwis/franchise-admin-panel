@@ -20,6 +20,12 @@ import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
+import Modal from 'react-bootstrap/Modal';
+import Dropdown from 'react-bootstrap/Dropdown';
+
+
+
 // reactstrap components
 import {
   Card,
@@ -35,6 +41,12 @@ import Header from "components/Headers/Header.js";
 
 const Icons = () => {
   const [copiedText, setCopiedText] = useState();
+
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <>
       <Header />
@@ -45,7 +57,9 @@ const Icons = () => {
           <div className="col">
             <Card className="shadow">
               <CardHeader className="bg-transparent">
-                <h3 className="mb-0">Add</h3>
+                <h3 className="mb-0">Add Delivery boy</h3>
+                <center> <Button style={{float:'right'}} className="mt-3" variant="primary">ADD</Button></center>
+
               </CardHeader>
               <CardBody>
                 {/* <Row className="icon-examples">
@@ -2786,15 +2800,106 @@ const Icons = () => {
                             <Form.Group className='mt-3' controlId="validationFormik01">
                             <Form.Control style={{borderRadius:'10px'}} type="number" placeholder='Enter Phone number' />
                             </Form.Group>
+                            <Dropdown className="mt-4">
+      <Dropdown.Toggle variant="success" id="dropdown-basic">
+        Status
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item href="#/action-1">Active</Dropdown.Item>
+        <Dropdown.Item href="#/action-2">Inactive</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
 
 
-                           <center> <Button className="mt-3" variant="primary">ADD</Button></center>
 
               </CardBody>
             </Card>
+
+          <h3 className="mt-5">Delivery boy List</h3>
+            <Table className="mt-4"  bordered hover>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Phone Number</th>
+          <th></th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        
+            <td><i onClick={handleShow} class="fa-solid fa-pen-to-square"></i></td>
+            <td><i class="fa-solid fa-trash" Style="color: red;"></i></td>
+            <tr> <Button style={{padding:'2px'}} className="mt-2" variant="danger">Block</Button></tr>
+
+
+  
+        
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+          <td><i onClick={handleShow} class="fa-solid fa-pen-to-square"></i></td>
+          <td><i class="fa-solid fa-trash" Style="color: red;"></i></td>
+          <tr> <Button style={{padding:'2px'}} className="mt-2" variant="danger">Block</Button></tr>
+        </tr>
+        
+      </tbody>
+    </Table>
           </div>
         </Row>
+
+
+
+       
       </Container>
+      <Modal show={show} onHide={handleClose}>
+        
+        <Modal.Body>
+        <Form.Group className='mt-5' controlId="validationFormik01">
+                                    <Form.Control style={{borderRadius:'10px'}} type="text" placeholder='Enter name' />
+                                    </Form.Group>
+                                
+                            <Form.Group className='mt-3' controlId="validationFormik01">
+                            <Form.Control style={{borderRadius:'10px'}} type="text" placeholder='Enter  location' />
+                            </Form.Group>
+                            <Form.Group className='mt-3' controlId="validationFormik01">
+                            <Form.Control style={{borderRadius:'10px'}} type="number" placeholder='Enter Phone number' />
+                            </Form.Group>
+                            <Dropdown className="mt-4">
+      <Dropdown.Toggle variant="success" id="dropdown-basic">
+        Status
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item href="#/action-1">Active</Dropdown.Item>
+        <Dropdown.Item href="#/action-2">Inactive</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+
+
+
+
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Update
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
