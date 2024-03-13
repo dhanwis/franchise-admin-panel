@@ -511,7 +511,7 @@ mark,
   font-size: 80%;
   color: #8898aa;
 }
-.blockquote-footer::before {
+.blockquote-::before {
   content: "\2014\00A0";
 }
 

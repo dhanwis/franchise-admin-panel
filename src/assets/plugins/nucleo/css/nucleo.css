@@ -1,4 +1,4 @@
-/*--------------------------------
+/* --------------------------------
 
 hermes-dashboard-icons Web Font - built using nucleoapp.com
 License - nucleoapp.com/license/
@@ -192,7 +192,7 @@ License - nucleoapp.com/license/
 /*------------------------
     font icons
 -------------------------*/
-
+/* 
 .ni-active-40::before {
   content: "\ea02";
 }
@@ -591,7 +591,6 @@ License - nucleoapp.com/license/
 
 .ni-ui-04::before {
   content: "\ea65";
-}
+} */
 
 
-/* all icon font classes list here */

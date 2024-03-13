@@ -19,6 +19,7 @@
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
 
+
 const UserHeader = () => {
   return (
     <>
@@ -26,8 +27,8 @@ const UserHeader = () => {
         className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
         style={{
           minHeight: "600px",
-          backgroundImage:
-            "url(" + require("../../assets/img/theme/profile-cover.jpg") + ")",
+          backgroundImage: `url('https://wallpapercave.com/wp/wp1874191.jpg')`
+           ,
           backgroundSize: "cover",
           backgroundPosition: "center top",
         }}
@@ -38,18 +39,11 @@ const UserHeader = () => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Hello Jesse</h1>
+              <h1 className="display-2 text-white">Franchise Name</h1>
               <p className="text-white mt-0 mb-5">
-                This is your profile page. You can see the progress you've made
-                with your work and manage your projects or assigned tasks
+              Introducing Franchise , your ultimate culinary companion for seamless and savory dining experiences! As a leading food app franchise, we specialize in revolutionizing the way you indulge in your favorite flavors. Operating on an area-based delivery model, we bring the finest cuisines right to your doorstep, ensuring convenience and satisfaction with every bite.
               </p>
-              <Button
-                color="info"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                Edit profile
-              </Button>
+             
             </Col>
           </Row>
         </Container>

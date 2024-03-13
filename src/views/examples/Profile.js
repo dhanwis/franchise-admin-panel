@@ -48,14 +48,14 @@ const Profile = () => {
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                        src={("https://thumbs.dreamstime.com/b/man-profile-cartoon-smiling-round-icon-vector-illustration-graphic-design-135443422.jpg")}
                       />
                     </a>
                   </div>
                 </Col>
               </Row>
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                <div className="d-flex justify-content-between">
+                {/* <div className="d-flex justify-content-between">
                   <Button
                     className="mr-4"
                     color="info"
@@ -74,7 +74,7 @@ const Profile = () => {
                   >
                     Message
                   </Button>
-                </div>
+                </div> */}
               </CardHeader>
               <CardBody className="pt-0 pt-md-4">
                 <Row>
@@ -82,45 +82,39 @@ const Profile = () => {
                     <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                       <div>
                         <span className="heading">22</span>
-                        <span className="description">Friends</span>
+                        <span className="description">Orders</span>
                       </div>
                       <div>
                         <span className="heading">10</span>
-                        <span className="description">Photos</span>
+                        <span className="description">Menu items</span>
                       </div>
                       <div>
                         <span className="heading">89</span>
-                        <span className="description">Comments</span>
+                        <span className="description">Ratings</span>
                       </div>
                     </div>
                   </div>
                 </Row>
-                <div className="text-center">
+                <div className="text-center ">
                   <h3>
-                    Jessica Jones
-                    <span className="font-weight-light">, 27</span>
+                    Franchise name
+                   
                   </h3>
                   <div className="h5 font-weight-300">
                     <i className="ni location_pin mr-2" />
                     Bucharest, Romania
                   </div>
-                  <div className="h5 mt-4">
+                  {/* <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
                     Solution Manager - Creative Tim Officer
                   </div>
                   <div>
                     <i className="ni education_hat mr-2" />
                     University of Computer Science
-                  </div>
+                  </div> */}
                   <hr className="my-4" />
-                  <p>
-                    Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                    Nick Murphy — writes, performs and records all of his own
-                    music.
-                  </p>
-                  <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    Show more
-                  </a>
+                 
+                 
                 </div>
               </CardBody>
             </Card>
@@ -133,14 +127,14 @@ const Profile = () => {
                     <h3 className="mb-0">My account</h3>
                   </Col>
                   <Col className="text-right" xs="4">
-                    <Button
+                    {/* <Button
                       color="primary"
                       href="#pablo"
                       onClick={(e) => e.preventDefault()}
                       size="sm"
                     >
                       Settings
-                    </Button>
+                    </Button> */}
                   </Col>
                 </Row>
               </CardHeader>
@@ -161,9 +155,9 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="lucky.jesse"
+                           
                             id="input-username"
-                            placeholder="Username"
+                            placeholder="enter username"
                             type="text"
                           />
                         </FormGroup>
@@ -179,7 +173,7 @@ const Profile = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-email"
-                            placeholder="jesse@example.com"
+                            placeholder="enter email-address"
                             type="email"
                           />
                         </FormGroup>
@@ -187,38 +181,10 @@ const Profile = () => {
                     </Row>
                     <Row>
                       <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            First name
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="First name"
-                            type="text"
-                          />
-                        </FormGroup>
+                      
                       </Col>
                       <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-last-name"
-                          >
-                            Last name
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Jesse"
-                            id="input-last-name"
-                            placeholder="Last name"
-                            type="text"
-                          />
-                        </FormGroup>
+                       
                       </Col>
                     </Row>
                   </div>
@@ -239,7 +205,7 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                            
                             id="input-address"
                             placeholder="Home Address"
                             type="text"
@@ -258,7 +224,7 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="New York"
+                           
                             id="input-city"
                             placeholder="City"
                             type="text"
@@ -275,7 +241,7 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="United States"
+                            
                             id="input-country"
                             placeholder="Country"
                             type="text"
@@ -302,20 +268,7 @@ const Profile = () => {
                   </div>
                   <hr className="my-4" />
                   {/* Description */}
-                  <h6 className="heading-small text-muted mb-4">About me</h6>
-                  <div className="pl-lg-4">
-                    <FormGroup>
-                      <label>About Me</label>
-                      <Input
-                        className="form-control-alternative"
-                        placeholder="A few words about you ..."
-                        rows="4"
-                        defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                        Open Source."
-                        type="textarea"
-                      />
-                    </FormGroup>
-                  </div>
+                 
                 </Form>
               </CardBody>
             </Card>

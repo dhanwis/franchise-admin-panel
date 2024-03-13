@@ -18,6 +18,8 @@
 import { useState } from "react";
 // react component that copies the given text inside your clipboard
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 // reactstrap components
 import {
   Card,
@@ -43,10 +45,10 @@ const Icons = () => {
           <div className="col">
             <Card className="shadow">
               <CardHeader className="bg-transparent">
-                <h3 className="mb-0">Icons</h3>
+                <h3 className="mb-0">Add</h3>
               </CardHeader>
               <CardBody>
-                <Row className="icon-examples">
+                {/* <Row className="icon-examples">
                   <Col lg="3" md="6">
                     <CopyToClipboard
                       text={"ni ni-active-40"}
@@ -2773,7 +2775,21 @@ const Icons = () => {
                         : "Copy To Clipbord"}
                     </UncontrolledTooltip>
                   </Col>
-                </Row>
+                </Row> */}
+                 <Form.Group className='mt-5' controlId="validationFormik01">
+                                    <Form.Control style={{borderRadius:'10px'}} type="text" placeholder='Enter name' />
+                                    </Form.Group>
+                                
+                            <Form.Group className='mt-3' controlId="validationFormik01">
+                            <Form.Control style={{borderRadius:'10px'}} type="text" placeholder='Enter  location' />
+                            </Form.Group>
+                            <Form.Group className='mt-3' controlId="validationFormik01">
+                            <Form.Control style={{borderRadius:'10px'}} type="number" placeholder='Enter Phone number' />
+                            </Form.Group>
+
+
+                           <center> <Button className="mt-3" variant="primary">ADD</Button></center>
+
               </CardBody>
             </Card>
           </div>
