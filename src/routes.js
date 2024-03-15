@@ -39,14 +39,14 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/maps",
-    name: "Maps",
+    path: "/ordermanagement",
+    name: "Orders",
     icon: "ni ni-pin-3 text-orange",
     component: <Maps />,
     layout: "/admin",
   },
   {
-    path: "/icons",
+    path: "/deliveryboy",
     name: "Delivery Boy",
     icon: "ni ni-planet text-blue",
     component: <Icons />,
@@ -67,12 +67,12 @@ var routes = [
     component: <Login />,
     layout: "/auth",
   },
-  {
-    path: "/register",
-    name: "Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: <Register />,
-    layout: "/auth",
-  },
+  // {
+  //   path: "/deliveryboy",
+  //   name: "Delivery Boy",
+  //   icon: "ni ni-circle-08 text-pink",
+  //   component: <Register />,
+  //   layout: "/auth",
+  // },
 ];
 export default routes;

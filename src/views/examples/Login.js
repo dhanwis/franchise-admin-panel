@@ -1,26 +1,7 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-// reactstrap components
+import { useState } from "react";
 import {
   Button,
   Card,
-  CardHeader,
   CardBody,
   FormGroup,
   Form,
@@ -33,18 +14,73 @@ import {
 } from "reactstrap";
 
 const Login = () => {
+
+  // form validation
+  const [userdata, setUserData] = useState({
+    name: "",
+    password: "",
+  });
+  console.log(userdata);
+  const [nameError, setNameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const validateName = (name) => {
+    if (!name.trim()) {
+      setNameError("Name is required");
+      return false;
+    }
+    setNameError("");
+    return true;
+  };
+
+  const validatePassword = (password) => {
+     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+      setPasswordError(
+        "Password must contain at least 8 characters, one letter and one number"
+      );
+      return false;
+    }
+    setPasswordError("");
+    return true;
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userdata, [name]: value });
+    if (name === "name") {
+      validateName(value);
+    } else if (name === "password") {
+      validatePassword(value);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const isNameValid = validateName(userdata.name);
+    const isPasswordValid = validatePassword(userdata.password);
+    if (isNameValid && isPasswordValid) {
+
+
+      // Perform form submission logic here
+      console.log("Form submitted successfully");
+    } else {
+      console.log("Invalid name or password");
+    }
+  };
+
   return (
     <>
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
-          
           <CardBody className="px-lg-5 py-lg-5">
-            {/* <div className="text-center text-muted mb-4">
-              <small>Or sign in with credentials</small>
-              
-            </div> */}
-            <center> <b><small  >Sign in with</small></b></center>
-            <Form className="mt-4" role="form">
+            <center>
+              <b>
+                <small>Sign in with</small>
+              </b>
+            </center>
+            <Form className="mt-4" role="form" onSubmit={handleSubmit}>
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -53,11 +89,14 @@ const Login = () => {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
-                    placeholder="Email"
-                    type="email"
-                    autoComplete="new-email"
+                    placeholder="Franchise name"
+                    type="text"
+                    name="name"
+                    value={userdata.name}
+                    onChange={handleInputChange}
                   />
                 </InputGroup>
+                {nameError && <span className="text-danger">{nameError}</span>}
               </FormGroup>
               <FormGroup>
                 <InputGroup className="input-group-alternative">
@@ -69,25 +108,30 @@ const Login = () => {
                   <Input
                     placeholder="Password"
                     type="password"
-                    autoComplete="new-password"
+                    name="password"
+                    value={userdata.password}
+                    onChange={handleInputChange}
                   />
                 </InputGroup>
+                {passwordError && (
+                  <span className="text-danger">{passwordError}</span>
+                )}
               </FormGroup>
-              <div className="custom-control custom-control-alternative custom-checkbox">
+              {/* <div className="custom-control custom-control-alternative custom-checkbox">
                 <input
                   className="custom-control-input"
-                  id=" customCheckLogin"
+                  id="customCheckLogin"
                   type="checkbox"
                 />
                 <label
                   className="custom-control-label"
-                  htmlFor=" customCheckLogin"
+                  htmlFor="customCheckLogin"
                 >
                   <span className="text-muted">Remember me</span>
                 </label>
-              </div>
+              </div> */}
               <div className="text-center">
-                <Button className="my-4" color="primary" type="button">
+                <Button className="my-4" color="primary" type="submit">
                   Sign in
                 </Button>
               </div>

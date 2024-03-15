@@ -39,7 +39,7 @@
   --danger: #f5365c;
   --light: #adb5bd;
   --dark: #212529;
-  --default: #172b4d;
+  --default: #;
   --white: #fff;
   --neutral: #fff;
   --darker: black;
@@ -93,6 +93,8 @@ body {
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }
+
+
 
 hr {
   box-sizing: content-box;
@@ -18333,6 +18335,8 @@ textarea[resize="horizontal"] {
   height: 30px;
   line-height: 30px;
 }
+
+
 
 .popover {
   border: 0;
