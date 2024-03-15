@@ -1,20 +1,4 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import { useState } from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
@@ -150,7 +134,7 @@ const Index = (props) => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">Page visits</h3>
+                    <h3 className="mb-0">Most Ordered Dishes</h3>
                   </div>
                   <div className="col text-right">
                     <Button
@@ -167,10 +151,10 @@ const Index = (props) => {
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Page name</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col">Unique users</th>
-                    <th scope="col">Bounce rate</th>
+                    <th scope="col">Item Name</th>
+                    <th scope="col">Order Frequency</th>
+                    <th scope="col">Restaurants Name</th>
+                    <th scope="col">Category</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -226,7 +210,7 @@ const Index = (props) => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">Social traffic</h3>
+                    <h3 className="mb-0">Top Restaurants</h3>
                   </div>
                   <div className="col text-right">
                     <Button
@@ -243,8 +227,8 @@ const Index = (props) => {
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Referral</th>
-                    <th scope="col">Visitors</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Total Orders</th>
                     <th scope="col" />
                   </tr>
                 </thead>
