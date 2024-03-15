@@ -1,13 +1,12 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Button } from 'reactstrap';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -20,25 +19,59 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
+  "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
   // hide last border
-  '&:last-child td, &:last-child th': {
+  "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
-function createData(id, date,location,item,address,restaurant,deliveryboy,status) {
-  return { id,date,location,item,address,restaurant,deliveryboy,status };
+function createData(
+  id,
+  date,
+  location,
+  item,
+  address,
+  restaurant,
+  deliveryboy,
+  status
+) {
+  return { id, date, location, item, address, restaurant, deliveryboy, status };
 }
 
-
 const rows = [
-  createData('1','09-12-2024','kannur', 'pizza', 'pizza','pizza','pizza','Out for Delivery'),
-  createData('2','09-12-2024', 'kannur', 'pizza', 'pizza','pizza','pizza','Order Placed'),
-  createData('3','09-12-2024', 'kannur', 'pizza', 'pizza','pizza','pizza','Out for Delivery')
-
+  createData(
+    "1",
+    "09-12-2024",
+    "kannur",
+    "pizza",
+    "pizza",
+    "pizza",
+    "pizza",
+    "Out for Delivery"
+  ),
+  createData(
+    "2",
+    "09-12-2024",
+    "kannur",
+    "pizza",
+    "pizza",
+    "pizza",
+    "pizza",
+    "Order Placed"
+  ),
+  createData(
+    "3",
+    "09-12-2024",
+    "kannur",
+    "pizza",
+    "pizza",
+    "pizza",
+    "pizza",
+    "Out for Delivery"
+  ),
 ];
 
 export default function CustomizedTables() {
@@ -56,9 +89,6 @@ export default function CustomizedTables() {
             <StyledTableCell align="right">Restaurant</StyledTableCell>
             <StyledTableCell align="right">Delivery Boy</StyledTableCell>
             <StyledTableCell align="right">Status</StyledTableCell>
-
-            
-
           </TableRow>
         </TableHead>
         <TableBody>
@@ -74,9 +104,6 @@ export default function CustomizedTables() {
               <StyledTableCell align="right">{row.restaurant}</StyledTableCell>
               <StyledTableCell align="right">{row.deliveryboy}</StyledTableCell>
               <StyledTableCell align="right">{row.status}</StyledTableCell>
-
-
-
             </StyledTableRow>
           ))}
         </TableBody>
