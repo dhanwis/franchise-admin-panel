@@ -15,7 +15,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: 16,
   },
 }));
 
@@ -29,15 +29,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(id, date,location,item,address,restaurant,deliveryboy,status) {
-  return { id,date,location,item,address,restaurant,deliveryboy,status };
+function createData(id, name,Phone,Email,address) {
+  return { id,name,Phone,Email,address};
 }
 
 
 const rows = [
-  createData('1','09-12-2024','kannur', 'pizza', 'pizza','pizza','pizza','Out for Delivery'),
-  createData('2','09-12-2024', 'kannur', 'pizza', 'pizza','pizza','pizza','Order Placed'),
-  createData('3','09-12-2024', 'kannur', 'pizza', 'pizza','pizza','pizza','Out for Delivery')
+  createData('1','Ram','9876564567', 'demo@gmail.com', 'pizza'),
+  createData('2','Ram', '8976456756', 'demo@gmail.com', 'pizza'),
 
 ];
 
@@ -47,16 +46,14 @@ export default function CustomizedTables() {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Order ID</StyledTableCell>
-            <StyledTableCell align="right">Date</StyledTableCell>
-            <StyledTableCell align="right">Location</StyledTableCell>
-            <StyledTableCell align="right">Item</StyledTableCell>
+          <StyledTableCell style={{ backgroundColor: 'rgb(130, 78, 210)', color: 'white' }}>ID</StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: 'rgb(130, 78, 210)', color: 'white' }} align="right">Name</StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: 'rgb(130, 78, 210)', color: 'white' }} align="right">Phone</StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: 'rgb(130, 78, 210)', color: 'white' }} align="right">Email</StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: 'rgb(130, 78, 210)', color: 'white' }} align="right">Address</StyledTableCell>
 
-            <StyledTableCell align="right">Address</StyledTableCell>
-            <StyledTableCell align="right">Restaurant</StyledTableCell>
-            <StyledTableCell align="right">Delivery Boy</StyledTableCell>
-            <StyledTableCell align="right">Status</StyledTableCell>
 
+           
             
 
           </TableRow>
@@ -67,13 +64,12 @@ export default function CustomizedTables() {
               <StyledTableCell component="th" scope="row">
                 {row.id}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.date}</StyledTableCell>
-              <StyledTableCell align="right">{row.location}</StyledTableCell>
-              <StyledTableCell align="right">{row.item}</StyledTableCell>
+              <StyledTableCell align="right">{row.name}</StyledTableCell>
+              <StyledTableCell align="right">{row.Phone}</StyledTableCell>
+              <StyledTableCell align="right">{row.Email}</StyledTableCell>
               <StyledTableCell align="right">{row.address}</StyledTableCell>
-              <StyledTableCell align="right">{row.restaurant}</StyledTableCell>
-              <StyledTableCell align="right">{row.deliveryboy}</StyledTableCell>
-              <StyledTableCell align="right">{row.status}</StyledTableCell>
+              
+             
 
 
 

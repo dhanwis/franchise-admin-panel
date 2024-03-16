@@ -22,6 +22,7 @@ import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
+import Customer from "views/examples/Customermanagement";
 
 var routes = [
   {
@@ -50,6 +51,13 @@ var routes = [
     name: "Delivery Boy",
     icon: "ni ni-planet text-blue",
     component: <Icons />,
+    layout: "/admin",
+  },
+  {
+    path: "/customer",
+    name: "Customer",
+    icon: "ni ni-planet text-blue",
+    component: <Customer/>,
     layout: "/admin",
   },
   {

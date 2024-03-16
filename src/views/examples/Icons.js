@@ -1,4 +1,7 @@
 
+
+
+
 import { useState } from "react";
 // react component that copies the given text inside your clipboard
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -44,6 +47,22 @@ const Icons = () => {
     boynumber:""
     })
 
+    const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    setValidated(true);
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setaddboy({ ...addboy, [name]: value });
+  };
+
 
 
   
@@ -62,39 +81,66 @@ const Icons = () => {
 
               </CardHeader>
               <CardBody>
-               
-                 <Form.Group className='mt-5' controlId="validationFormik01">
-                                    <Form.Control style={{borderRadius:'10px'}} type="text" placeholder='Enter name' value={addboy.boyname} onChange={(e)=>setaddboy({...addboy,boyname:e.target.value})} />
-                                    </Form.Group>
-                                
-                            <Form.Group className='mt-3' controlId="validationFormik01">
-                            <Form.Control style={{borderRadius:'10px'}} type="text" placeholder='Enter  location' value={addboy.boylocation} onChange={(e)=>setaddboy({...addboy,boylocation:e.target.value})} />
-                            </Form.Group>
-                            <Form.Group className='mt-3' controlId="validationFormik01">
-                            <Form.Control style={{borderRadius:'10px'}} type="number" placeholder='Enter Phone number' value={addboy.boynumber} onChange={(e)=>setaddboy({...addboy,boynumber:e.target.value})} />
-                            </Form.Group>
-                        
-                            <Box  sx={{ minWidth: 120 }} style={{borderRadius:'10px'}} className='mt-4'>
-      <FormControl  >
-        <InputLabel variant="standard" htmlFor="uncontrolled-native">
-          Status : 
-        </InputLabel>
-        <NativeSelect className="mt-3"
-          defaultValue={30}
-          inputProps={{
-            name: 'age',
-            id: 'uncontrolled-native',
-          }}
-          
-        >
-          
-          <option value={10}>Active</option>
-          <option value={20}>Inactive</option>
-          
-        </NativeSelect>
-      </FormControl>
-    </Box>
-    <center> <Button  className="mt-4" variant="primary">ADD</Button></center>
+              <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                  <Form.Group controlId="validationFormik01">
+                    <Form.Control
+                      style={{ borderRadius: '10px' }}
+                      type="text"
+                      placeholder="Enter name"
+                      name="boyname"
+                      value={addboy.boyname}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <Form.Control.Feedback type="invalid">Name is required</Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group controlId="validationFormik02" className='mt-4'>
+                    <Form.Control
+                      style={{ borderRadius: '10px' }}
+                      type="text"
+                      placeholder="Enter location"
+                      name="boylocation"
+                      value={addboy.boylocation}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <Form.Control.Feedback type="invalid">Location is required</Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group controlId="validationFormik03" className='mt-4'>
+                    <Form.Control
+                      style={{ borderRadius: '10px' }}
+                      type="number"
+                      placeholder="Enter Phone number"
+                      name="boynumber"
+                      value={addboy.boynumber}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <Form.Control.Feedback type="invalid">Phone number is required</Form.Control.Feedback>
+                  </Form.Group>
+                  <Box sx={{ minWidth: 120 }} style={{ borderRadius: '10px' }} className='mt-4'>
+                    <FormControl>
+                      <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                        Status:
+                      </InputLabel>
+                      <NativeSelect
+                        className="mt-3"
+                        defaultValue={30}
+                        inputProps={{
+                          name: 'age',
+                          id: 'uncontrolled-native',
+                        }}
+                      >
+                        <option value={10}>Active</option>
+                        <option value={20}>Inactive</option>
+                      </NativeSelect>
+                    </FormControl>
+                  </Box>
+                  <center>
+                    <Button type="submit" className="mt-4" variant="primary">ADD</Button>
+                  </center>
+                </Form>
+
 
 
 
@@ -202,4 +248,4 @@ const Icons = () => {
   );
 };
 
-export default Icons;
+export default Icons;

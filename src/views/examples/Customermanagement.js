@@ -16,13 +16,12 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 import CustomizedTables from "./Tableees";
-import CollapsibleTable from "./Ordertable";
 
 const MapWrapper = () => {
  
 };
 
-const Maps = () => {
+const Customer = () => {
   return (
     <>
       <Header />
@@ -33,13 +32,13 @@ const Maps = () => {
           <div className="col">
             <Card className="shadow">
               <CardHeader className="bg-transparent">
-                <h3 className="mb-0">Order List</h3>
+                <h3 className="mb-0">Customer List</h3>
 
               </CardHeader>
               <CardBody>
               
     
-    <CollapsibleTable/>
+    <CustomizedTables />
 
                
                
@@ -60,4 +59,4 @@ const Maps = () => {
   );
 };
 
-export default Maps;
+export default Customer;
