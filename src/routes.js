@@ -52,6 +52,14 @@ var routes = [
     component: <Icons />,
     layout: "/admin",
   },
+
+  {
+    path: "/deliveryboy",
+    name: "Delivery Boy",
+    icon: "ni ni-planet text-blue",
+    component: <Icons />,
+    layout: "/admin",
+  },
   {
     path: "/user-profile",
     name: "User Profile",
