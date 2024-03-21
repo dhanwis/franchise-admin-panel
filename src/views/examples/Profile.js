@@ -1,20 +1,4 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 
 // reactstrap components
 import {
@@ -100,10 +84,10 @@ const Profile = () => {
                     Franchise name
                    
                   </h3>
-                  <div className="h5 font-weight-300">
+                  {/* <div className="h5 font-weight-300">
                     <i className="ni location_pin mr-2" />
                     Bucharest, Romania
-                  </div>
+                  </div> */}
                   {/* <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
                     Solution Manager - Creative Tim Officer
@@ -151,15 +135,17 @@ const Profile = () => {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            Username
+                            Email Address
                           </label>
-                          <Input
-                            className="form-control-alternative"
-                           
-                            id="input-username"
-                            placeholder="enter username"
-                            type="text"
-                          />
+                          <br/>
+                          <input
+  className="form-control-alternative"
+  id="input-postal-code"
+  placeholder="Email"
+  type="email"
+  value="" // Replace `postalCode` with the variable holding your postal code value
+  readOnly
+/>
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -168,13 +154,13 @@ const Profile = () => {
                             className="form-control-label"
                             htmlFor="input-email"
                           >
-                            Email address
+                          Address
                           </label>
                           <Input
                             className="form-control-alternative"
                             id="input-email"
-                            placeholder="enter email-address"
-                            type="email"
+                            placeholder="Address"
+                            type="text"
                           />
                         </FormGroup>
                       </Col>
@@ -188,9 +174,9 @@ const Profile = () => {
                       </Col>
                     </Row>
                   </div>
-                  <hr className="my-4" />
+                 
                   {/* Address */}
-                  <h6 className="heading-small text-muted mb-4">
+                  {/* <h6 className="heading-small text-muted mb-4">
                     Contact information
                   </h6>
                   <div className="pl-lg-4">
@@ -215,57 +201,31 @@ const Profile = () => {
                     </Row>
                     <Row>
                       <Col lg="4">
-                        <FormGroup>
+                      <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-city"
-                          >
-                            City
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                           
-                            id="input-city"
-                            placeholder="City"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="4">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-country"
+                            htmlFor="input-address"
                           >
                             Country
                           </label>
-                          <Input
-                            className="form-control-alternative"
-                            
-                            id="input-country"
-                            placeholder="Country"
-                            type="text"
-                          />
+                          <input
+  className="form-control-alternative"
+  id="input-country"
+  placeholder="Country"
+  type="text"
+  value="" // Replace `postalCode` with the variable holding your postal code value
+  readOnly
+/>
                         </FormGroup>
                       </Col>
                       <Col lg="4">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-country"
-                          >
-                            Postal code
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-postal-code"
-                            placeholder="Postal code"
-                            type="number"
-                          />
-                        </FormGroup>
+                     
+                      </Col>
+                      <Col lg="4">
+                      
                       </Col>
                     </Row>
-                  </div>
+                  </div> */}
                   <hr className="my-4" />
                   {/* Description */}
                  

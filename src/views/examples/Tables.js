@@ -23,27 +23,173 @@ import Header from "components/Headers/Header.js";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import Demo from "./Demo";
+import { useEffect, useState } from "react";
+import { addRestaurantAPI } from "Services/allAPI";
+import Swal from "sweetalert2";
+import { getallRestaurantAPI } from "Services/allAPI";
+
 
 const Tables = () => {
+
+const [addRestaurant,setAddRestaurants]=useState({
+  resname:"",
+  reslocation:"",
+  resaddress:"",
+  resphone:"",
+  restime:"",
+  resimage:""
+
+
+
+
+})
+console.log(addRestaurant);
+const [preview,setpreview]=useState("")
+console.log(preview);
+
+
+
+useEffect(()=>{
+  if(addRestaurant.resimage)
+  {(setpreview(URL.createObjectURL(addRestaurant.resimage)))}
+  else{
+    setpreview("")
+  }
+
+
+},[addRestaurant.resimage])
+
+
+const handleaddRestaurant=async(e)=>{
+  e.preventDefault()
+  const { resname,reslocation, resaddress, resphone,restime, resimage}=addRestaurant
+
+  if( !resname ||
+    !reslocation ||
+    !resaddress ||
+    !resphone ||
+    !restime ||
+    !resimage
+   ){
+      alert('please fill the for completely')
+    }
+    else{
+      // reqbody
+      const reqbody=new FormData()
+
+      reqbody.append("resname",resname)
+      reqbody.append("reslocation",reslocation)
+      reqbody.append("resaddress",resaddress)
+      reqbody.append("resphone",resphone)
+      reqbody.append("restime",restime)
+      reqbody.append("resimage",resimage)
+     
+
+// reheader
+
+const reqheader={
+  "Content-Type":"multipart/form-data"
+ 
+
+}
+
+
+
+
+      const result=await addRestaurantAPI(reqbody,reqheader)
+      console.log(result);
+      if(result.status===200){
+        Swal.fire({
+          icon:'success',
+          title: 'Restaurant Added Successfully',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          }
+        })
+        setAddRestaurants({
+          resname:"",
+          reslocation:"",
+          resaddress:"",
+          resphone:"",
+          restime:"",
+          resimage:""
+   
+        })
+      }
+    
+      
+    }
+
+  }
+
+  const [viewRestaurant,setviewRestaurant]=useState([])
+
+
+  const gethomeRestaurant=async()=>{
+    const result= await getallRestaurantAPI()
+    console.log(result.data);
+    setviewRestaurant(result.data)
+
+    
+
+  }
+useEffect(()=>{
+    gethomeRestaurant()
+  },[])
   return (
     <>
       <Header />
-      {/* Page content */}
+     
       <Container className="mt--7" fluid>
-        {/* Table */}
+       
         <Row>
           <div className="col">
             <Card className="shadow">
               <CardHeader className="border-0">
-                <h3 className="mb-0">Restaurants</h3>
+                <h3 className="mb-0">Add Restaurants</h3>
               </CardHeader>
 
               <Container className="mb-5">
+              <center>
+              <label>
+  <input 
+    type="file" 
+    style={{ display: 'none' }} 
+    onChange={(e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      
+      reader.onloadend = () => {
+        setpreview(reader.result); // Assuming you have a state variable 'preview' and a setter function 'setPreview' to update it
+      };
+      
+      reader.readAsDataURL(file);
+      
+      setAddRestaurants({ ...addRestaurant, resimage: file }); // Assuming you have a state variable 'addRestaurant' and a setter function 'setAddRestaurant' to update it
+    }} 
+  />
+  {/* target.files are used to access a file or image. */}
+  <img 
+    width={'250x'} 
+    height={'200px'} 
+    src={preview ? preview : "http://cdn.onlinewebfonts.com/svg/img_94880.png"} 
+    className='justify-content-center' 
+    alt="" 
+  />
+</label>
+           </center>
+          
                 <Form.Group className="mt-5" controlId="validationFormik01">
                   <Form.Control
                     style={{ borderRadius: "10px" }}
                     type="text"
                     placeholder="Name"
+                    value={addRestaurant.resname}
+                    onChange={(e)=>setAddRestaurants({...addRestaurant,resname:e.target.value})}
+
                   />
                 </Form.Group>
 
@@ -52,13 +198,29 @@ const Tables = () => {
                     style={{ borderRadius: "10px" }}
                     type="text"
                     placeholder="Location"
+                    value={addRestaurant.reslocation}
+                    onChange={(e)=>setAddRestaurants({...addRestaurant,reslocation:e.target.value})}
                   />
+                  
+                </Form.Group>
+                <Form.Group className="mt-3" controlId="validationFormik01">
+                  <Form.Control
+                    style={{ borderRadius: "10px" }}
+                    type="text"
+                    placeholder="Address"
+                    value={addRestaurant.resaddress}
+                    onChange={(e)=>setAddRestaurants({...addRestaurant,resaddress:e.target.value})}
+
+                  />
+                  
                 </Form.Group>
                 <Form.Group className="mt-3" controlId="validationFormik01">
                   <Form.Control
                     style={{ borderRadius: "10px" }}
                     type="number"
                     placeholder="Phone number"
+                    value={addRestaurant.resphone}
+                    onChange={(e)=>setAddRestaurants({...addRestaurant,resphone:e.target.value})}
                   />
                 </Form.Group>
                 <Form.Group className="mt-3" controlId="validationFormik01">
@@ -66,14 +228,16 @@ const Tables = () => {
                     style={{ borderRadius: "10px" }}
                     type="text"
                     placeholder="Working Time"
+                    value={addRestaurant.restime}
+                    onChange={(e)=>setAddRestaurants({...addRestaurant,restime:e.target.value})}
                   />
                 </Form.Group>
                 <div style={{ display: "flex", justifyContent: "center" }}>
-                  <Button
+                  <Button 
                     className="mt-3"
                     color="primary"
                     href="#pablo"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={handleaddRestaurant}
                     size="md"
                   >
                     Add
@@ -98,13 +262,20 @@ const Tables = () => {
                   <tr>
                     <th scope="col">Name</th>
                     <th scope="col">location</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Phone Number</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Working Time</th>
                     <th scope="col" />
                   </tr>
                 </thead>
                 <tbody>
+                 {
+                  viewRestaurant?.length>0?
+                  viewRestaurant.map((item)=>(
+
+                  
+                 
                   <tr>
                     <th scope="row">
                       <Media className="align-items-center">
@@ -120,20 +291,27 @@ const Tables = () => {
                         </a>
                         <Media>
                           <span className="mb-0 text-sm">
-                            Argon Design System
+                            {item.resname}
                           </span>
                         </Media>
                       </Media>
                     </th>
-                    <td>$2,500 USD</td>
+                    <td>{item.reslocation}</td>
                     <td>
                       <Badge color="" className="badge-dot mr-4">
                         <i className="bg-warning" />
-                        pending
+                        {item.resaddress}
                       </Badge>
                     </td>
                     <td>
-                      <div className="avatar-group">
+                    <Badge color="" className="badge-dot mr-4">
+                        <i className="bg-warning" />
+                        {item.resphone}
+                      </Badge>
+                      
+                    </td>
+                    <td>
+                    <div className="avatar-group">
                         <a
                           className="avatar avatar-sm"
                           href="#pablo"
@@ -146,12 +324,7 @@ const Tables = () => {
                             src={require("../../assets/img/theme/team-1-800x800.jpg")}
                           />
                         </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip731399078"
-                        >
-                          Ryan Tompson
-                        </UncontrolledTooltip>
+                        
                         <a
                           className="avatar avatar-sm"
                           href="#pablo"
@@ -208,18 +381,6 @@ const Tables = () => {
                         </UncontrolledTooltip>
                       </div>
                     </td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">60%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="60"
-                            barClassName="bg-warning"
-                          />
-                        </div>
-                      </div>
-                    </td>
                     <td className="text-right">
                       {/* <UncontrolledDropdown>
                         <DropdownToggle
@@ -247,518 +408,12 @@ const Tables = () => {
                       <Demo />
                     </td>
                   </tr>
-                  <tr>
-                    <th scope="row">
-                      <Media className="align-items-center">
-                        <a
-                          className="avatar rounded-circle mr-3"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            src={require("../../assets/img/theme/angular.jpg")}
-                          />
-                        </a>
-                        <Media>
-                          <span className="mb-0 text-sm">
-                            Angular Now UI Kit PRO
-                          </span>
-                        </Media>
-                      </Media>
-                    </th>
-                    <td>$1,800 USD</td>
-                    <td>
-                      <Badge color="" className="badge-dot">
-                        <i className="bg-success" />
-                        completed
-                      </Badge>
-                    </td>
-                    <td>
-                      <div className="avatar-group">
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip188614932"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-1-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip188614932"
-                        >
-                          Ryan Tompson
-                        </UncontrolledTooltip>
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip66535734"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-2-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip delay={0} target="tooltip66535734">
-                          Romina Hadid
-                        </UncontrolledTooltip>
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip427561578"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-3-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip427561578"
-                        >
-                          Alexander Smith
-                        </UncontrolledTooltip>
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip904098289"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-4-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip904098289"
-                        >
-                          Jessica Doe
-                        </UncontrolledTooltip>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">100%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="100"
-                            barClassName="bg-success"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                    <td className="text-right">
-                      {/* <UncontrolledDropdown>
-                        <DropdownToggle
-                          className="btn-icon-only text-light"
-                          href="#pablo"
-                          role="button"
-                          size="sm"
-                          color=""
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className="fas fa-ellipsis-v" />
-                        </DropdownToggle>
-                        <DropdownMenu className="dropdown-menu-arrow" right>
-                          <DropdownItem
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            Action
-                          </DropdownItem>
-                          
-                        </DropdownMenu>
-                      </UncontrolledDropdown> */}
-                      <Demo />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <Media className="align-items-center">
-                        <a
-                          className="avatar rounded-circle mr-3"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            src={require("../../assets/img/theme/sketch.jpg")}
-                          />
-                        </a>
-                        <Media>
-                          <span className="mb-0 text-sm">Black Dashboard</span>
-                        </Media>
-                      </Media>
-                    </th>
-                    <td>$3,150 USD</td>
-                    <td>
-                      <Badge color="" className="badge-dot mr-4">
-                        <i className="bg-danger" />
-                        delayed
-                      </Badge>
-                    </td>
-                    <td>
-                      <div className="avatar-group">
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip707904950"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-1-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip707904950"
-                        >
-                          Ryan Tompson
-                        </UncontrolledTooltip>
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip353988222"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-2-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip353988222"
-                        >
-                          Romina Hadid
-                        </UncontrolledTooltip>
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip467171202"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-3-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip467171202"
-                        >
-                          Alexander Smith
-                        </UncontrolledTooltip>
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip362118155"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-4-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip362118155"
-                        >
-                          Jessica Doe
-                        </UncontrolledTooltip>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">72%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="72"
-                            barClassName="bg-danger"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                    <td className="text-right">
-                      <Demo />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <Media className="align-items-center">
-                        <a
-                          className="avatar rounded-circle mr-3"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            src={require("../../assets/img/theme/react.jpg")}
-                          />
-                        </a>
-                        <Media>
-                          <span className="mb-0 text-sm">
-                            React Material Dashboard
-                          </span>
-                        </Media>
-                      </Media>
-                    </th>
-                    <td>$4,400 USD</td>
-                    <td>
-                      <Badge color="" className="badge-dot">
-                        <i className="bg-info" />
-                        on schedule
-                      </Badge>
-                    </td>
-                    <td>
-                      <div className="avatar-group">
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip226319315"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-1-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip226319315"
-                        >
-                          Ryan Tompson
-                        </UncontrolledTooltip>
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip711961370"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-2-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip711961370"
-                        >
-                          Romina Hadid
-                        </UncontrolledTooltip>
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip216246707"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-3-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip216246707"
-                        >
-                          Alexander Smith
-                        </UncontrolledTooltip>
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip638048561"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-4-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip638048561"
-                        >
-                          Jessica Doe
-                        </UncontrolledTooltip>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">90%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="90"
-                            barClassName="bg-info"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                    <td className="text-right">
-                      <Demo />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <Media className="align-items-center">
-                        <a
-                          className="avatar rounded-circle mr-3"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            src={require("../../assets/img/theme/vue.jpg")}
-                          />
-                        </a>
-                        <Media>
-                          <span className="mb-0 text-sm">
-                            Vue Paper UI Kit PRO
-                          </span>
-                        </Media>
-                      </Media>
-                    </th>
-                    <td>$2,200 USD</td>
-                    <td>
-                      <Badge color="" className="badge-dot mr-4">
-                        <i className="bg-success" />
-                        completed
-                      </Badge>
-                    </td>
-                    <td>
-                      <div className="avatar-group">
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip781594051"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-1-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip781594051"
-                        >
-                          Ryan Tompson
-                        </UncontrolledTooltip>
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip840372212"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-2-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip840372212"
-                        >
-                          Romina Hadid
-                        </UncontrolledTooltip>
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip497647175"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-3-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip497647175"
-                        >
-                          Alexander Smith
-                        </UncontrolledTooltip>
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip951447946"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-4-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip951447946"
-                        >
-                          Jessica Doe
-                        </UncontrolledTooltip>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">100%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="100"
-                            barClassName="bg-danger"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                    <td className="text-right">
-                      {/* <UncontrolledDropdown>
-                        <DropdownToggle
-                          className="btn-icon-only text-light"
-                          href="#pablo"
-                          role="button"
-                          size="sm"
-                          color=""
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className="fas fa-ellipsis-v" />
-                        </DropdownToggle>
-                        <DropdownMenu className="dropdown-menu-arrow" right>
-                          <DropdownItem
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            Action
-                          </DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledDropdown> */}
-                      <Demo />
-                    </td>
-                  </tr>
+                  ))
+                :null}
+                
+                 
+                
+                 
                 </tbody>
               </Table>
             </Card>
