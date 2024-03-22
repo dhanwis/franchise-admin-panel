@@ -44,9 +44,9 @@ const Auth = (props) => {
         <AuthNavbar />
         <div className="header bg-gradient-gray py-7 py-lg-8">
           <Container>
-            <div className="header-body text-center mb-7">
+            <div className="header-body text-center mb-5">
               <Row className="justify-content-center">
-                <Col lg="5" md="6">
+                <Col lg="5" mt-2  md="6">
                   <h1 className="text-white">Welcome!</h1>
                   <p className="text-lead text-light">
                   Sign in to your account to get started. Enter your credentials and let the deliciousness begin!
@@ -72,7 +72,7 @@ const Auth = (props) => {
           </div>
         </div>
         {/* Page content */}
-        <Container className="mt--8 pb-5">
+        <Container className="mt--9 pb-5">
           <Row className="justify-content-center">
             <Routes>
               {getRoutes(routes)}

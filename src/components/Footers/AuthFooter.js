@@ -4,7 +4,7 @@ import { NavItem, NavLink, Nav, Container, Row, Col } from "reactstrap";
 const Login = () => {
   return (
     <>
-      <footer className="py-5">
+      {/* <footer className="py-5">
         <Container>
           <Row className="align-items-center justify-content-xl-between">
             <Col xl="6">
@@ -57,7 +57,7 @@ const Login = () => {
             </Col>
           </Row>
         </Container>
-      </footer>
+      </footer> */}
     </>
   );
 };
