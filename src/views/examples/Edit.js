@@ -28,7 +28,7 @@ function Edit({candy}) {
         boyname:candy.boyname,
         boylocation:candy.boylocation,
         boynumber:candy.boynumber,
-        status:candy.status,
+        // status:candy.status,
        
       })
       console.log(information);
@@ -37,15 +37,15 @@ function Edit({candy}) {
       const{addpetresponse,setaddpetresponse}=useContext(addpetresponsecontext)
 
 
-      const handleStatusChange = (event) => {
-        const selectedStatus = event.target.value; // Get the selected value
-        setinformation({...information, status: selectedStatus}); // Update the status property in the state
-      };
+      // const handleStatusChange = (event) => {
+      //   const selectedStatus = event.target.value; // Get the selected value
+      //   setinformation({...information, status: selectedStatus}); // Update the status property in the state
+      // };
 
 
       const handleupdate=async()=>{
-        const {id,boyname,boylocation,boynumber,status}= information
-        if(!boyname || !boylocation || !boynumber || !status){
+        const {id,boyname,boylocation,boynumber}= information
+        if(!boyname || !boylocation || !boynumber){
           alert('please fill the form completely')
         }
         else{
@@ -53,7 +53,7 @@ function Edit({candy}) {
           reqbody.append("boyname",boyname)
           reqbody.append("boylocation",boylocation)
           reqbody.append("boynumber",boynumber)
-          reqbody.append("status",status)
+          // reqbody.append("status",status)
 
         
          
@@ -116,7 +116,7 @@ function Edit({candy}) {
                             </Form.Group>
                             <Box  sx={{ minWidth: 120 }} style={{borderRadius:'10px'}} className='mt-4'>
                             <FormControl className="mt-4">
-      <InputLabel variant="standard" htmlFor="uncontrolled-native">
+      {/* <InputLabel variant="standard" htmlFor="uncontrolled-native">
         Status:
       </InputLabel>
       
@@ -132,7 +132,7 @@ function Edit({candy}) {
         <option value="">Select status</option>
         <option value="Active">Active</option>
         <option value="Inactive">Inactive</option>
-      </NativeSelect>
+      </NativeSelect> */}
     </FormControl>
     </Box>
 

@@ -43,5 +43,13 @@ export const getallRestaurantAPI=async()=>{
 }
 
 
+// edit restaurant
+export const updateRestaurantAPI=async(resid,reqbody,reqheader)=>{
+    return  await commonAPI('PUT',`${BASE_URL}/restaurants/update/${resid}`,reqbody,reqheader)
+  
+  
+  }
+
+
   
 

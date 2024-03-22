@@ -50,13 +50,13 @@ const Icons = () => {
     boyname:"",
     boylocation:"",
     boynumber:"",
-    status:""
+    // status:""
     })
 
-    const handleStatusChange = (event) => {
-      const selectedStatus = event.target.value; // Get the selected value
-      setaddboy({...addboy, status: selectedStatus}); // Update the status property in the state
-    };
+    // const handleStatusChange = (event) => {
+    //   const selectedStatus = event.target.value; // Get the selected value
+    //   setaddboy({...addboy, status: selectedStatus}); // Update the status property in the state
+    // };
   
 
     const{addpetresponse,setaddpetresponse}=useContext(addpetresponsecontext)
@@ -94,9 +94,9 @@ const Icons = () => {
   const handleadd = async (e) => {
     e.preventDefault();
   
-    const { boyname, boylocation, boynumber,status} = addboy;
+    const { boyname, boylocation, boynumber} = addboy;
   
-    if (!boyname || !boylocation || !boynumber || !status) {
+    if (!boyname || !boylocation || !boynumber ) {
       alert("Please fill the form completely");
     } else {
       const reqbody = new FormData();
@@ -104,7 +104,7 @@ const Icons = () => {
       reqbody.append("boyname", boyname);
       reqbody.append("boylocation", boylocation);
       reqbody.append("boynumber", boynumber);
-      reqbody.append("status", status);
+      // reqbody.append("status", status);
   
       const reqheader = {
         "Content-Type": "application/json",
@@ -134,7 +134,7 @@ const Icons = () => {
       boyname:"",
       boylocation:"",
       boynumber:"",
-      status:""
+      // status:""
       })
     }
   };
@@ -176,7 +176,7 @@ const handledelete = async (id) => {
     if (result.status === 200) {
      
       setgetBoys(prevBoys => prevBoys.filter(boy => boy._id !== id));
-      console.log("Deleted successfully");
+     
     } else {
       console.log(result.response.data);
     }
@@ -247,7 +247,7 @@ const handledelete = async (id) => {
                   </Form.Group>
 
                   <FormControl className="mt-4">
-      <InputLabel variant="standard" htmlFor="uncontrolled-native">
+      {/* <InputLabel variant="standard" htmlFor="uncontrolled-native">
         Status:
       </InputLabel>
       
@@ -263,7 +263,7 @@ const handledelete = async (id) => {
         <option value="">Select status</option>
         <option value="Active">Active</option>
         <option value="Inactive">Inactive</option>
-      </NativeSelect>
+      </NativeSelect> */}
     </FormControl>
                 
                   <center>
@@ -286,7 +286,7 @@ const handledelete = async (id) => {
           <th>Name</th>
           <th>Location</th>
           <th>Phone Number</th>
-          <th>Status</th>
+          {/* <th>Status</th> */}
 
           <th></th>
           
@@ -304,7 +304,7 @@ const handledelete = async (id) => {
           <td>{item.boyname}</td>
           <td>{item.boylocation}</td>
           <td>{item.boynumber}</td>
-          <td>{item.status}</td>
+          {/* <td>{item.status}</td> */}
         
             <td>  <Edit candy={item}/> </td>
             

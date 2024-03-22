@@ -23,11 +23,15 @@ import Header from "components/Headers/Header.js";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import Demo from "./Demo";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { addRestaurantAPI } from "Services/allAPI";
 import Swal from "sweetalert2";
 import { getallRestaurantAPI } from "Services/allAPI";
+import { BASE_URL } from "Services/baseUrl";
+import { addpetresponsecontext } from "./ContextShare";
 
+
+import exampleImage from 'images/pngegg.png';
 
 const Tables = () => {
 
@@ -46,6 +50,8 @@ const [addRestaurant,setAddRestaurants]=useState({
 console.log(addRestaurant);
 const [preview,setpreview]=useState("")
 console.log(preview);
+const{addpetresponse,setaddpetresponse}=useContext(addpetresponsecontext)
+
 
 
 
@@ -138,7 +144,11 @@ const reqheader={
   }
 useEffect(()=>{
     gethomeRestaurant()
-  },[])
+  },[addpetresponse])
+
+
+
+  
   return (
     <>
       <Header />
@@ -172,13 +182,15 @@ useEffect(()=>{
     }} 
   />
   {/* target.files are used to access a file or image. */}
-  <img 
+  {/* <img 
     width={'250x'} 
     height={'200px'} 
     src={preview ? preview : "http://cdn.onlinewebfonts.com/svg/img_94880.png"} 
     className='justify-content-center' 
     alt="" 
-  />
+  /> */}
+   <img width={'250x'} 
+    height={'210px'}    src={preview ? preview : exampleImage} alt="Example" />
 </label>
            </center>
           
@@ -279,16 +291,7 @@ useEffect(()=>{
                   <tr>
                     <th scope="row">
                       <Media className="align-items-center">
-                        <a
-                          className="avatar rounded-circle mr-3"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            src={require("../../assets/img/theme/bootstrap.jpg")}
-                          />
-                        </a>
+                       
                         <Media>
                           <span className="mb-0 text-sm">
                             {item.resname}
@@ -298,89 +301,35 @@ useEffect(()=>{
                     </th>
                     <td>{item.reslocation}</td>
                     <td>
-                      <Badge color="" className="badge-dot mr-4">
+                  
                         <i className="bg-warning" />
                         {item.resaddress}
-                      </Badge>
+                    
                     </td>
                     <td>
-                    <Badge color="" className="badge-dot mr-4">
+                 
                         <i className="bg-warning" />
                         {item.resphone}
-                      </Badge>
+                      
                       
                     </td>
                     <td>
                     <div className="avatar-group">
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip731399078"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-1-800x800.jpg")}
-                          />
-                        </a>
-                        
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip491083084"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-2-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip491083084"
-                        >
-                          Romina Hadid
-                        </UncontrolledTooltip>
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip528540780"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-3-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip528540780"
-                        >
-                          Alexander Smith
-                        </UncontrolledTooltip>
-                        <a
-                          className="avatar avatar-sm"
-                          href="#pablo"
-                          id="tooltip237898869"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("../../assets/img/theme/team-4-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                          delay={0}
-                          target="tooltip237898869"
-                        >
-                          Jessica Doe
-                        </UncontrolledTooltip>
-                      </div>
+  <div
+    className="avatar avatar-sm rounded-circle"
+    style={{
+      width: '50px',
+      height: '50px',
+      backgroundImage: `url(${BASE_URL}/restaurantimages/${item.resimage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+    }}
+  ></div>
+</div>
+
                     </td>
+                       <td>{item.restime}</td>
                     <td className="text-right">
                       {/* <UncontrolledDropdown>
                         <DropdownToggle
@@ -405,7 +354,7 @@ useEffect(()=>{
                           
                         </DropdownMenu>
                       </UncontrolledDropdown> */}
-                      <Demo />
+                      <Demo comp={item} />
                     </td>
                   </tr>
                   ))
