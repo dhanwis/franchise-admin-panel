@@ -1,4 +1,3 @@
-import { loginAPI } from "Services/allAPI";
 import { useState } from "react";
 import {
   Button,
@@ -10,25 +9,25 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Row,
+  Spinner,
+  Alert,
   Col,
 } from "reactstrap";
-import Swal from "sweetalert2";
-
 
 const Login = () => {
 
-
- 
-
   // form validation
   const [userdata, setUserData] = useState({
-    name: "",
+    franchiseName: "",
     password: "",
   });
-  console.log(userdata);
+
   const [nameError, setNameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const { login } = useContext(AuthContext);
 
   const validateName = (name) => {
     if (!name.trim()) {
@@ -40,7 +39,7 @@ const Login = () => {
   };
 
   const validatePassword = (password) => {
-     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
     if (!passwordRegex.test(password)) {
       setPasswordError(
@@ -55,24 +54,43 @@ const Login = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userdata, [name]: value });
-    if (name === "name") {
+    if (name === "franchiseName") {
       validateName(value);
     } else if (name === "password") {
       validatePassword(value);
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const isNameValid = validateName(userdata.name);
+    const isNameValid = validateName(userdata.franchiseName);
     const isPasswordValid = validatePassword(userdata.password);
+
+    // Clear any previous errors
+    setError("");
+
     if (isNameValid && isPasswordValid) {
+      try {
+        // Show loading state
+        setLoading(true);
 
+        await login(userdata.franchiseName, userdata.password);
 
-      // Perform form submission logic here
-      console.log("Form submitted successfully");
+        // Redirect after successful login
+        navigate("/admin/index");
+      } catch (error) {
+        // Set error message
+        setError(
+          error.response?.data?.message || "An error occurred during login."
+        );
+      } finally {
+        // Hide loading state after a short delay
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000); // Adjust the delay time as needed
+      }
     } else {
-      console.log("Invalid name or password");
+      setError("Please fill up both fields");
     }
   };
 
@@ -101,8 +119,8 @@ const Login = () => {
                   <Input
                     placeholder="Franchise name"
                     type="text"
-                    name="name"
-                    value={userdata.name}
+                    name="franchiseName"
+                    value={userdata.franchiseName}
                     onChange={handleInputChange}
                    
                   />
@@ -129,7 +147,7 @@ const Login = () => {
                   <span className="text-danger">{passwordError}</span>
                 )}
               </FormGroup>
-              <div className="custom-control custom-control-alternative custom-checkbox">
+              {/* <div className="custom-control custom-control-alternative custom-checkbox">
                 <input
                   className="custom-control-input"
                   id="customCheckLogin"
@@ -141,35 +159,21 @@ const Login = () => {
                 >
                   <span className="text-muted">Remember me</span>
                 </label>
-              </div>
+              </div> */}
               <div className="text-center">
-                <Button  className="my-4" color="primary" type="submit">
+                <Button className="my-4" color="primary" type="submit">
                   Sign in
                 </Button>
               </div>
+
+              <Alert color="error" severity="info" sx={{ mt: 3 }}>
+                <Typography color="error" variant="body2">
+                  {error && error}
+                </Typography>
+              </Alert>
             </Form>
           </CardBody>
         </Card>
-        <Row className="mt-3">
-          <Col xs="6">
-            <a
-              className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
-            >
-              <small>Forgot password?</small>
-            </a>
-          </Col>
-          <Col className="text-right" xs="6">
-            <a
-              className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
-            >
-              <small>Create new account</small>
-            </a>
-          </Col>
-        </Row>
       </Col>
     </>
   );

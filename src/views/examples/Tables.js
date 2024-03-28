@@ -30,20 +30,35 @@ import { getallRestaurantAPI } from "Services/allAPI";
 import { BASE_URL } from "Services/baseUrl";
 import { addpetresponsecontext, addrestaurantresponsecontext } from "./ContextShare";
 
+<<<<<<< HEAD
 
 import exampleImage from 'images/pngegg.png';
 import { deleteRestaurantAPI } from "Services/allAPI";
+=======
+import exampleImage from "images/pngegg.png";
+import { AuthContext } from "contexts/authContext";
+>>>>>>> 2d1354b8f57fb53d4e205c63c7fb991a8e9c7cdd
 
 const Tables = () => {
+  const { user } = useContext(AuthContext);
+  console.log("user", user);
 
-const [addRestaurant,setAddRestaurants]=useState({
-  resname:"",
-  reslocation:"",
-  resaddress:"",
-  resphone:"",
-  restime:"",
-  resimage:""
+  const [addRestaurant, setAddRestaurants] = useState({
+    resname: "",
+    reslocation: "",
+    resaddress: "",
+    resphone: "",
+    restime: "",
+    resimage: "",
+  });
+  console.log(addRestaurant);
+  const [preview, setpreview] = useState("");
+  console.log(preview);
+  const { addpetresponse, setaddpetresponse } = useContext(
+    addpetresponsecontext
+  );
 
+<<<<<<< HEAD
 
 
 
@@ -86,40 +101,58 @@ const handleaddRestaurant=async(e)=>{
       icon: "warning",
       
     })
+=======
+  useEffect(() => {
+    if (addRestaurant.resimage) {
+      setpreview(URL.createObjectURL(addRestaurant.resimage));
+    } else {
+      setpreview("");
+>>>>>>> 2d1354b8f57fb53d4e205c63c7fb991a8e9c7cdd
     }
-    else{
+  }, [addRestaurant.resimage]);
+
+  const handleaddRestaurant = async (e) => {
+    e.preventDefault();
+    const { resname, reslocation, resaddress, resphone, restime, resimage } =
+      addRestaurant;
+
+    if (
+      !resname ||
+      !reslocation ||
+      !resaddress ||
+      !resphone ||
+      !restime ||
+      !resimage
+    ) {
+      alert("please fill the for completely");
+    } else {
       // reqbody
-      const reqbody=new FormData()
+      const reqbody = new FormData();
 
-      reqbody.append("resname",resname)
-      reqbody.append("reslocation",reslocation)
-      reqbody.append("resaddress",resaddress)
-      reqbody.append("resphone",resphone)
-      reqbody.append("restime",restime)
-      reqbody.append("resimage",resimage)
-     
+      reqbody.append("resname", resname);
+      reqbody.append("reslocation", reslocation);
+      reqbody.append("resaddress", resaddress);
+      reqbody.append("resphone", resphone);
+      reqbody.append("restime", restime);
+      reqbody.append("resimage", resimage);
 
-// reheader
+      // reheader
 
-const reqheader={
-  "Content-Type":"multipart/form-data"
- 
+      const reqheader = {
+        "Content-Type": "multipart/form-data",
+      };
 
-}
-
-
-
-
-      const result=await addRestaurantAPI(reqbody,reqheader)
+      const result = await addRestaurantAPI(reqbody, reqheader, user._id);
       console.log(result);
-      if(result.status===200){
+      if (result.status === 200) {
         Swal.fire({
-          icon:'success',
-          title: 'Restaurant Added Successfully',
+          icon: "success",
+          title: "Restaurant Added Successfully",
           showClass: {
-            popup: 'animate__animated animate__fadeInDown'
+            popup: "animate__animated animate__fadeInDown",
           },
           hideClass: {
+<<<<<<< HEAD
             popup: 'animate__animated animate__fadeOutUp'
           }
         })
@@ -129,25 +162,32 @@ const reqheader={
 
 
 
+=======
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        });
+>>>>>>> 2d1354b8f57fb53d4e205c63c7fb991a8e9c7cdd
         setAddRestaurants({
-          resname:"",
-          reslocation:"",
-          resaddress:"",
-          resphone:"",
-          restime:"",
-          resimage:""
-   
-        })
+          resname: "",
+          reslocation: "",
+          resaddress: "",
+          resphone: "",
+          restime: "",
+          resimage: "",
+        });
       }
-    
-      
     }
+  };
 
-  }
+  const [viewRestaurant, setviewRestaurant] = useState([]);
 
-  const [viewRestaurant,setviewRestaurant]=useState([])
+  const gethomeRestaurant = async (franchise) => {
+    const result = await getallRestaurantAPI(franchise._id);
 
+    setviewRestaurant(result.data);
+  };
 
+<<<<<<< HEAD
 
   const gethomeRestaurant=async()=>{
     const result= await getallRestaurantAPI()
@@ -178,12 +218,19 @@ useEffect(()=>{
 
 
   
+=======
+  useEffect(() => {
+    if (user) {
+      gethomeRestaurant(user);
+    }
+  }, [user]);
+
+>>>>>>> 2d1354b8f57fb53d4e205c63c7fb991a8e9c7cdd
   return (
     <>
       <Header />
-     
+
       <Container className="mt--7" fluid>
-       
         <Row>
           <div className="col">
             <Card className="shadow">
@@ -192,45 +239,53 @@ useEffect(()=>{
               </CardHeader>
 
               <Container className="mb-5">
-              <center>
-              <label>
-  <input 
-    type="file" 
-    style={{ display: 'none' }} 
-    onChange={(e) => {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      
-      reader.onloadend = () => {
-        setpreview(reader.result); // Assuming you have a state variable 'preview' and a setter function 'setPreview' to update it
-      };
-      
-      reader.readAsDataURL(file);
-      
-      setAddRestaurants({ ...addRestaurant, resimage: file }); // Assuming you have a state variable 'addRestaurant' and a setter function 'setAddRestaurant' to update it
-    }} 
-  />
-  {/* target.files are used to access a file or image. */}
-  {/* <img 
+                <center>
+                  <label>
+                    <input
+                      type="file"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        const reader = new FileReader();
+
+                        reader.onloadend = () => {
+                          setpreview(reader.result); // Assuming you have a state variable 'preview' and a setter function 'setPreview' to update it
+                        };
+
+                        reader.readAsDataURL(file);
+
+                        setAddRestaurants({ ...addRestaurant, resimage: file }); // Assuming you have a state variable 'addRestaurant' and a setter function 'setAddRestaurant' to update it
+                      }}
+                    />
+                    {/* target.files are used to access a file or image. */}
+                    {/* <img 
     width={'250x'} 
     height={'200px'} 
     src={preview ? preview : "http://cdn.onlinewebfonts.com/svg/img_94880.png"} 
     className='justify-content-center' 
     alt="" 
   /> */}
-   <img width={'250x'} 
-    height={'210px'}    src={preview ? preview : exampleImage} alt="Example" />
-</label>
-           </center>
-          
+                    <img
+                      width={"250x"}
+                      height={"210px"}
+                      src={preview ? preview : exampleImage}
+                      alt="Example"
+                    />
+                  </label>
+                </center>
+
                 <Form.Group className="mt-5" controlId="validationFormik01">
                   <Form.Control
                     style={{ borderRadius: "10px" }}
                     type="text"
                     placeholder="Name"
                     value={addRestaurant.resname}
-                    onChange={(e)=>setAddRestaurants({...addRestaurant,resname:e.target.value})}
-
+                    onChange={(e) =>
+                      setAddRestaurants({
+                        ...addRestaurant,
+                        resname: e.target.value,
+                      })
+                    }
                   />
                 </Form.Group>
 
@@ -240,9 +295,13 @@ useEffect(()=>{
                     type="text"
                     placeholder="Location"
                     value={addRestaurant.reslocation}
-                    onChange={(e)=>setAddRestaurants({...addRestaurant,reslocation:e.target.value})}
+                    onChange={(e) =>
+                      setAddRestaurants({
+                        ...addRestaurant,
+                        reslocation: e.target.value,
+                      })
+                    }
                   />
-                  
                 </Form.Group>
                 <Form.Group className="mt-3" controlId="validationFormik01">
                   <Form.Control
@@ -250,10 +309,13 @@ useEffect(()=>{
                     type="text"
                     placeholder="Address"
                     value={addRestaurant.resaddress}
-                    onChange={(e)=>setAddRestaurants({...addRestaurant,resaddress:e.target.value})}
-
+                    onChange={(e) =>
+                      setAddRestaurants({
+                        ...addRestaurant,
+                        resaddress: e.target.value,
+                      })
+                    }
                   />
-                  
                 </Form.Group>
                 <Form.Group className="mt-3" controlId="validationFormik01">
                   <Form.Control
@@ -261,7 +323,12 @@ useEffect(()=>{
                     type="number"
                     placeholder="Phone number"
                     value={addRestaurant.resphone}
-                    onChange={(e)=>setAddRestaurants({...addRestaurant,resphone:e.target.value})}
+                    onChange={(e) =>
+                      setAddRestaurants({
+                        ...addRestaurant,
+                        resphone: e.target.value,
+                      })
+                    }
                   />
                 </Form.Group>
                 <Form.Group className="mt-3" controlId="validationFormik01">
@@ -270,11 +337,16 @@ useEffect(()=>{
                     type="text"
                     placeholder="Working Time"
                     value={addRestaurant.restime}
-                    onChange={(e)=>setAddRestaurants({...addRestaurant,restime:e.target.value})}
+                    onChange={(e) =>
+                      setAddRestaurants({
+                        ...addRestaurant,
+                        restime: e.target.value,
+                      })
+                    }
                   />
                 </Form.Group>
                 <div style={{ display: "flex", justifyContent: "center" }}>
-                  <Button 
+                  <Button
                     className="mt-3"
                     color="primary"
                     href="#pablo"
@@ -312,56 +384,45 @@ useEffect(()=>{
                   </tr>
                 </thead>
                 <tbody>
-                 {
-                  viewRestaurant?.length>0?
-                  viewRestaurant.map((item)=>(
-
-                  
-                 
-                  <tr>
-                    <th scope="row">
-                      <Media className="align-items-center">
-                       
-                        <Media>
-                          <span className="mb-0 text-sm">
-                            {item.resname}
-                          </span>
-                        </Media>
-                      </Media>
-                    </th>
-                    <td>{item.reslocation}</td>
-                    <td>
-                  
-                        <i className="bg-warning" />
-                        {item.resaddress}
-                    
-                    </td>
-                    <td>
-                 
-                        <i className="bg-warning" />
-                        {item.resphone}
-                      
-                      
-                    </td>
-                    <td>
-                    <div className="avatar-group">
-  <div
-    className="avatar avatar-sm rounded-circle"
-    style={{
-      width: '50px',
-      height: '50px',
-      backgroundImage: `url(${BASE_URL}/restaurantimages/${item.resimage})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-    }}
-  ></div>
-</div>
-
-                    </td>
-                       <td>{item.restime}</td>
-                    <td className="text-right">
-                      {/* <UncontrolledDropdown>
+                  {viewRestaurant?.length > 0
+                    ? viewRestaurant.map((item) => (
+                        <tr>
+                          <th scope="row">
+                            <Media className="align-items-center">
+                              <Media>
+                                <span className="mb-0 text-sm">
+                                  {item.resname}
+                                </span>
+                              </Media>
+                            </Media>
+                          </th>
+                          <td>{item.reslocation}</td>
+                          <td>
+                            <i className="bg-warning" />
+                            {item.resaddress}
+                          </td>
+                          <td>
+                            <i className="bg-warning" />
+                            {item.resphone}
+                          </td>
+                          <td>
+                            <div className="avatar-group">
+                              <div
+                                className="avatar avatar-sm rounded-circle"
+                                style={{
+                                  width: "50px",
+                                  height: "50px",
+                                  backgroundImage: `url(${BASE_URL}/restaurantimages/${item.resimage})`,
+                                  backgroundSize: "cover",
+                                  backgroundPosition: "center",
+                                  backgroundRepeat: "no-repeat",
+                                }}
+                              ></div>
+                            </div>
+                          </td>
+                          <td>{item.restime}</td>
+                          <td className="text-right">
+                            {/* <UncontrolledDropdown>
                         <DropdownToggle
                           className="btn-icon-only text-light"
                           href="#pablo"
@@ -384,6 +445,7 @@ useEffect(()=>{
                           
                         </DropdownMenu>
                       </UncontrolledDropdown> */}
+<<<<<<< HEAD
                       <Demo comp={item} />
                     </td>
                     <td><Button style={{padding:'2px',backgroundColor:'rgb(220, 35, 67)',borderColor:'rgb(220, 35, 67)'}} className="mt-2" >Block</Button></td>
@@ -395,6 +457,13 @@ useEffect(()=>{
                  
                 
                  
+=======
+                            <Demo comp={item} />
+                          </td>
+                        </tr>
+                      ))
+                    : null}
+>>>>>>> 2d1354b8f57fb53d4e205c63c7fb991a8e9c7cdd
                 </tbody>
               </Table>
             </Card>
