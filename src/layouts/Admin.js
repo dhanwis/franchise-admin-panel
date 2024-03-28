@@ -1,5 +1,4 @@
-
-import React from "react";
+import React, { useContext } from "react";
 import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
@@ -9,8 +8,11 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
+//import { AuthContext } from "contexts/authContext";
 
 const Admin = (props) => {
+  //const { user, token } = useContext(AuthContext);
+
   const mainContent = React.useRef(null);
   const location = useLocation();
 
@@ -49,11 +51,13 @@ const Admin = (props) => {
       <Sidebar
         {...props}
         routes={routes}
-        logo={{
-          // innerLink: "/admin/index",
-          //  imgSrc: require("https://webstockreview.net/images/clipart-restaurant-restaurant-logo-13.png"),
-          //  imgAlt: "...",
-        }}
+        logo={
+          {
+            // innerLink: "/admin/index",
+            //  imgSrc: require("https://webstockreview.net/images/clipart-restaurant-restaurant-logo-13.png"),
+            //  imgAlt: "...",
+          }
+        }
       />
       <div className="main-content" ref={mainContent}>
         <AdminNavbar

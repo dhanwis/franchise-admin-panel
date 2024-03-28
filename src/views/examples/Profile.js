@@ -1,6 +1,4 @@
-
-
-// reactstrap components
+import { useContext } from "react";
 import {
   Button,
   Card,
@@ -15,11 +13,14 @@ import {
 } from "reactstrap";
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
+import { AuthContext } from "contexts/authContext";
+import { UserImageUrl } from "Services/baseUrl";
 
 const Profile = () => {
+  const { user } = useContext(AuthContext);
   return (
     <>
-      <UserHeader />
+      <UserHeader user={user} />
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -32,7 +33,7 @@ const Profile = () => {
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src={("https://thumbs.dreamstime.com/b/man-profile-cartoon-smiling-round-icon-vector-illustration-graphic-design-135443422.jpg")}
+                        src={user ? `${UserImageUrl}/${user.imageUrl}` : ""}
                       />
                     </a>
                   </div>
@@ -80,10 +81,7 @@ const Profile = () => {
                   </div>
                 </Row>
                 <div className="text-center ">
-                  <h3>
-                    Franchise name
-                   
-                  </h3>
+                  <h3>{user.name}</h3>
                   {/* <div className="h5 font-weight-300">
                     <i className="ni location_pin mr-2" />
                     Bucharest, Romania
@@ -97,8 +95,6 @@ const Profile = () => {
                     University of Computer Science
                   </div> */}
                   <hr className="my-4" />
-                 
-                 
                 </div>
               </CardBody>
             </Card>
@@ -137,15 +133,15 @@ const Profile = () => {
                           >
                             Email Address
                           </label>
-                          <br/>
+                          <br />
                           <input
-  className="form-control-alternative"
-  id="input-postal-code"
-  placeholder="Email"
-  type="email"
-  value="" // Replace `postalCode` with the variable holding your postal code value
-  readOnly
-/>
+                            className="form-control-alternative"
+                            id="input-postal-code"
+                            placeholder="Email"
+                            type="email"
+                            value={user.emailID} // Replace `postalCode` with the variable holding your postal code value
+                            readOnly
+                          />
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -154,27 +150,24 @@ const Profile = () => {
                             className="form-control-label"
                             htmlFor="input-email"
                           >
-                          Address
+                            Address
                           </label>
                           <Input
                             className="form-control-alternative"
                             id="input-email"
                             placeholder="Address"
                             type="text"
+                            value={user.location}
                           />
                         </FormGroup>
                       </Col>
                     </Row>
                     <Row>
-                      <Col lg="6">
-                      
-                      </Col>
-                      <Col lg="6">
-                       
-                      </Col>
+                      <Col lg="6"></Col>
+                      <Col lg="6"></Col>
                     </Row>
                   </div>
-                 
+
                   {/* Address */}
                   {/* <h6 className="heading-small text-muted mb-4">
                     Contact information
@@ -228,7 +221,6 @@ const Profile = () => {
                   </div> */}
                   <hr className="my-4" />
                   {/* Description */}
-                 
                 </Form>
               </CardBody>
             </Card>

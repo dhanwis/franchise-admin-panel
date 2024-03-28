@@ -1,6 +1,7 @@
-
-import { Link } from "react-router-dom";
-
+import { AuthContext } from "contexts/authContext";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserImageUrl } from "Services/baseUrl";
 import {
   DropdownMenu,
   DropdownItem,
@@ -18,7 +19,17 @@ import {
   Media,
 } from "reactstrap";
 
+import { MenuList, MenuItem } from "@mui/material";
+
 const AdminNavbar = (props) => {
+  const { logout, user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout(); // Make sure this function is called
+    navigate("/auth/login");
+  };
+
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -48,12 +59,12 @@ const AdminNavbar = (props) => {
                   <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
-                      src={("https://thumbs.dreamstime.com/b/man-profile-cartoon-smiling-round-icon-vector-illustration-graphic-design-135443422.jpg")}
+                      src={user ? `${UserImageUrl}/${user.imageUrl}` : ""}
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Franchise name 
+                      {user && user.name}
                     </span>
                   </Media>
                 </Media>
@@ -79,9 +90,22 @@ const AdminNavbar = (props) => {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider /> */}
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
-                  <i className="ni ni-user-run" />
-                  <span>Logout</span>
+                <DropdownItem>
+                  {/* <i className="ni ni-user-run" />
+                  <span onClick={handleLogout}>Logout</span> */}
+
+                  <MenuList
+                    disablePadding
+                    dense
+                    sx={{
+                      p: "8px",
+                      "& > *": {
+                        borderRadius: 1,
+                      },
+                    }}
+                  >
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  </MenuList>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
