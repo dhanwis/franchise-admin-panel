@@ -13,6 +13,10 @@ import {
   Alert,
   Col,
 } from "reactstrap";
+import { Typography } from "@mui/material";
+import { useContext } from "react";
+import { AuthContext } from "contexts/authContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
@@ -28,6 +32,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const { login } = useContext(AuthContext);
+  const navigate = useNavigate()
 
   const validateName = (name) => {
     if (!name.trim()) {
@@ -161,7 +166,7 @@ const Login = () => {
                 </label>
               </div> */}
               <div className="text-center">
-                <Button className="my-4" color="primary" type="submit">
+                <Button className="my-4" color="primary" type="submit" onClick={handleSubmit}>
                   Sign in
                 </Button>
               </div>
