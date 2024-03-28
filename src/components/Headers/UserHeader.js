@@ -4,7 +4,6 @@ import myImage from 'images/wp1874191.jpg';
 const UserHeader = ({ user }) => {
   return (
     <>
-<<<<<<< HEAD
      <div
       className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
       style={{
@@ -17,17 +16,6 @@ const UserHeader = ({ user }) => {
       {/* Content of your component */}
   
 
-=======
-      <div
-        className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-        style={{
-          minHeight: "600px",
-          backgroundImage: `url('https://wallpapercave.com/wp/wp1874191.jpg')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
-        }}
-      >
->>>>>>> 2d1354b8f57fb53d4e205c63c7fb991a8e9c7cdd
         {/* Mask */}
         <span className="mask bg-gradient-default opacity-8" />
         {/* Header container */}
