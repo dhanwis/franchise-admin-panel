@@ -171,6 +171,8 @@ function Demo({comp}) {
        
       })
       handleClose()
+      setaddpetresponse(result.data)
+        
       
   
     }

@@ -1,3 +1,4 @@
+import { loginAPI } from "Services/allAPI";
 import { useState } from "react";
 import {
   Button,
@@ -12,8 +13,13 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import Swal from "sweetalert2";
+
 
 const Login = () => {
+
+
+ 
 
   // form validation
   const [userdata, setUserData] = useState({
@@ -70,6 +76,10 @@ const Login = () => {
     }
   };
 
+
+
+ 
+
   return (
     <>
       <Col lg="5" md="7">
@@ -80,7 +90,7 @@ const Login = () => {
                 <small>Sign in with</small>
               </b>
             </center>
-            <Form className="mt-4" role="form" onSubmit={handleSubmit}>
+            <Form className="mt-4" role="form" >
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -94,6 +104,7 @@ const Login = () => {
                     name="name"
                     value={userdata.name}
                     onChange={handleInputChange}
+                   
                   />
                 </InputGroup>
                 {nameError && <span className="text-danger">{nameError}</span>}
@@ -111,13 +122,14 @@ const Login = () => {
                     name="password"
                     value={userdata.password}
                     onChange={handleInputChange}
+                   
                   />
                 </InputGroup>
                 {passwordError && (
                   <span className="text-danger">{passwordError}</span>
                 )}
               </FormGroup>
-              {/* <div className="custom-control custom-control-alternative custom-checkbox">
+              <div className="custom-control custom-control-alternative custom-checkbox">
                 <input
                   className="custom-control-input"
                   id="customCheckLogin"
@@ -129,9 +141,9 @@ const Login = () => {
                 >
                   <span className="text-muted">Remember me</span>
                 </label>
-              </div> */}
+              </div>
               <div className="text-center">
-                <Button className="my-4" color="primary" type="submit">
+                <Button  className="my-4" color="primary" type="submit">
                   Sign in
                 </Button>
               </div>

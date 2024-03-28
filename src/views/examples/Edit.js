@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
@@ -10,6 +10,7 @@ import NativeSelect from '@mui/material/NativeSelect';
 import { editdeliveryboyAPI } from 'Services/allAPI';
 import { addpetresponsecontext } from './ContextShare';
 import Swal from 'sweetalert2';
+import { BASE_URL } from 'Services/baseUrl';
 
 
 
@@ -21,6 +22,8 @@ function Edit({candy}) {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [preview,setpreview]=useState("")
+
 
 
     const [information,setinformation]=useState({
@@ -28,13 +31,33 @@ function Edit({candy}) {
         boyname:candy.boyname,
         boylocation:candy.boylocation,
         boynumber:candy.boynumber,
+        devimage:""
         // status:candy.status,
        
       })
       console.log(information);
 
+      
+  //    useEffect(()=>{
+  //     if(information.devimage){
+  //       setpreview(URL.createObjectURL(information.devimage))
+     
+  
+  //   }
+  // },[information.devimage])
+  useEffect(() => {
+    if (information.devimage) {
+      const imageUrl = URL.createObjectURL(information.devimage);
+      console.log("Preview URL:", imageUrl); // Check if this URL is valid
+      setpreview(imageUrl);
+    }
+  }, [information.devimage]);
+  
 
       const{addpetresponse,setaddpetresponse}=useContext(addpetresponsecontext)
+
+
+
 
 
       // const handleStatusChange = (event) => {
@@ -44,7 +67,7 @@ function Edit({candy}) {
 
 
       const handleupdate=async()=>{
-        const {id,boyname,boylocation,boynumber}= information
+        const {id,boyname,boylocation,boynumber,devimage}= information
         if(!boyname || !boylocation || !boynumber){
           alert('please fill the form completely')
         }
@@ -53,35 +76,59 @@ function Edit({candy}) {
           reqbody.append("boyname",boyname)
           reqbody.append("boylocation",boylocation)
           reqbody.append("boynumber",boynumber)
-          // reqbody.append("status",status)
-
-        
          
+        
+        
+          preview?reqbody.append("devimage",devimage):reqbody.append("devimage",candy.devimage)
           
-    
+      
+      
+      
+        
+        // const token=sessionStorage.getItem("token")
+      
+        if(preview){
+          const reqheader={
+            "Content-Type":"multipart/form-data",
+       
+      
+          } 
+      
+          const result=await editdeliveryboyAPI(id,reqbody,reqheader)
+          console.log(result);
+          if(result.status===200){
+            Swal.fire({
+              icon: 'success',
+              title: 'Updated Successfully',
+             
+            })
+            handleClose()
+            setaddpetresponse(result.data)
+           
+          }
+          else{
+      
+      
+            console.log(result.response.data);
+          }
+        }
+        else{
           const reqheader={
             "Content-Type":"application/json",
-       
+      
       
         }
         const result=await editdeliveryboyAPI(id,reqbody,reqheader)
         console.log(result);
         if(result.status===200){
           Swal.fire({
-            icon:'success',
+            icon: 'success',
             title: 'Updated Successfully',
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp'
-            }
+           
           })
-          
-         
           handleClose()
           setaddpetresponse(result.data)
-         
+          
       
         }
         else{
@@ -90,10 +137,11 @@ function Edit({candy}) {
         
       
       
-      
+      }
       }
        }
-    
+       
+      
     
   
 
@@ -102,6 +150,10 @@ function Edit({candy}) {
         <i onClick={handleShow} class="fa-solid fa-pen-to-square"></i>
 
 <Modal show={show} onHide={handleClose}>
+<label htmlFor="imag" className='mt-4'>
+       <input id='imag' type="file" style={{display:'none'}}  onChange={(e)=>setinformation({...information,devimage:e.target.files[0]})}/>
+<center><img className='' src={preview?preview:`${BASE_URL}/deliveryboyimages/${candy.devimage}`} alt=""  width={'250px'} height={'160px'} /></center></label>
+
         
         <Modal.Body>
         <Form.Group className='mt-5' controlId="validationFormik01">

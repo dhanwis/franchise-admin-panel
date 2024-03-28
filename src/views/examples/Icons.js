@@ -12,6 +12,7 @@ import Modal from 'react-bootstrap/Modal';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -21,6 +22,7 @@ import {
   CardHeader,
   CardBody,
   Container,
+  Media,
   Row,
   Col,
   UncontrolledTooltip,
@@ -34,6 +36,10 @@ import Edit from "./Edit";
 import { editdeliveryboyAPI } from "Services/allAPI";
 import { addpetresponsecontext } from "./ContextShare";
 import Swal from "sweetalert2";
+import { BASE_URL } from "Services/baseUrl";
+import Demo from "./Demo";
+import { BlockAPI } from "Services/allAPI";
+import myImage from 'images/pngegg.png';
 
 const Icons = () => {
   const [copiedText, setCopiedText] = useState();
@@ -50,8 +56,28 @@ const Icons = () => {
     boyname:"",
     boylocation:"",
     boynumber:"",
+    devimage:""
     // status:""
     })
+
+    const [preview,setpreview]=useState("")
+
+    const [loading, setLoading] = useState(false);
+
+    const handleBlock = async (boyId) => {
+      setLoading(true);
+      try {
+        await BlockAPI(boyId);
+        // Handle success, update UI if necessary
+        console.log('Delivery boy blocked successfully');
+      } catch (error) {
+        console.error('Error blocking delivery boy:', error);
+        // Handle error, show error message to user
+      } finally {
+        setLoading(false);
+      }
+    };
+
 
     // const handleStatusChange = (event) => {
     //   const selectedStatus = event.target.value; // Get the selected value
@@ -71,6 +97,7 @@ const Icons = () => {
     const [getBoys,setgetBoys]=useState([])
 
     const [updateboyy, setupdateboyy] = useState([]);
+
 
 
 
@@ -94,20 +121,29 @@ const Icons = () => {
   const handleadd = async (e) => {
     e.preventDefault();
   
-    const { boyname, boylocation, boynumber} = addboy;
+    const { boyname, boylocation, boynumber,devimage} = addboy;
   
     if (!boyname || !boylocation || !boynumber ) {
-      alert("Please fill the form completely");
+    
+      Swal.fire({
+        title: "Please fill the form completely",
+      
+        icon: "warning",
+        
+      })
+      
+      
     } else {
       const reqbody = new FormData();
   
       reqbody.append("boyname", boyname);
       reqbody.append("boylocation", boylocation);
       reqbody.append("boynumber", boynumber);
+      reqbody.append("devimage", devimage);
       // reqbody.append("status", status);
   
       const reqheader = {
-        "Content-Type": "application/json",
+        "Content-Type":"multipart/form-data"
       };
   
       const result = await adddeliveryboyAPI(reqbody, reqheader);
@@ -134,6 +170,7 @@ const Icons = () => {
       boyname:"",
       boylocation:"",
       boynumber:"",
+      devimage:""
       // status:""
       })
     }
@@ -192,6 +229,18 @@ const handledelete = async (id) => {
   },[addpetresponse])
 
   
+useEffect(()=>{
+  if(addboy.devimage)
+  {(setpreview(URL.createObjectURL(addboy.devimage)))}
+  else{
+    setpreview("")
+  }
+
+
+},[addboy.devimage])
+
+
+  
   return (
     <>
       <Header />
@@ -206,8 +255,40 @@ const handledelete = async (id) => {
 
               </CardHeader>
               <CardBody>
-              <center> <img width={'180px'} height={'200px'} src="http://cdn.onlinewebfonts.com/svg/img_94880.png" className=' justify-content-center' alt=""  /></center>
 
+                
+              <center>
+              <label>
+  <input 
+    type="file" 
+    style={{ display: 'none' }} 
+    onChange={(e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      
+      reader.onloadend = () => {
+        setpreview(reader.result); // Assuming you have a state variable 'preview' and a setter function 'setPreview' to update it
+      };
+      
+      reader.readAsDataURL(file);
+      
+      setaddboy({ ...addboy, devimage: file }); // Assuming you have a state variable 'addRestaurant' and a setter function 'setAddRestaurant' to update it
+    }} 
+  />
+  {/* target.files are used to access a file or image. */}
+  {/* <img 
+    width={'250x'} 
+    height={'200px'} 
+    src={preview ? preview : "http://cdn.onlinewebfonts.com/svg/img_94880.png"} 
+    className='justify-content-center' 
+    alt="" 
+  /> */}
+   <img  width={'250x'}
+      height={'210px'}
+      src={preview ? preview : myImage} // Use myImage variable here
+      alt="Example" />
+</label>
+           </center>
               <Form className="mt-4" noValidate validated={validated} onSubmit={handleSubmit}>
                   <Form.Group controlId="validationFormik01">
                     <Form.Control
@@ -279,47 +360,122 @@ const handledelete = async (id) => {
             </Card>
 
           <h3 className="mt-5">Delivery boy List</h3>
-            <Table className="mt-4"  bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Location</th>
-          <th>Phone Number</th>
-          {/* <th>Status</th> */}
+            <Row className="mt-5">
+          <div className="col">
+            <Card className="bg-default shadow">
+              <CardHeader className="bg-transparent border-0">
+                <h3 className="text-white mb-0">deliveryboys</h3>
+              </CardHeader>
+              <Table 
+                className="align-items-center table-dark table-flush"
+                responsive
+              >
+                <thead className="thead-dark">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">location</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                    <th scope="col" />
+                  </tr>
+                </thead>
+                <tbody>
+                 {
+                  getBoys?.length>0?
+                  getBoys.map((item)=>(
 
-          <th></th>
-          
-        </tr>
-      </thead>
-      <tbody>
+                  
+                 
+                  <tr>
+                    <th scope="row">
+                      <Media className="align-items-center">
+                       
+                        <Media>
+                          <span className="mb-0 text-sm">
+                            {item.boyname}
+                          </span>
+                        </Media>
+                      </Media>
+                    </th>
+                    <td>{item.boylocation}</td>
+                  
+                    <td>
+                 
+                        <i className="bg-warning" />
+                        {item.boynumber}
+                      
+                      
+                    </td>
+                    <td>
+                    <div className="avatar-group">
+  <div
+    className="avatar avatar-sm rounded-circle"
+    style={{
+      width: '50px',
+      height: '50px',
+      backgroundImage: `url(${BASE_URL}/deliveryboyimages/${item.devimage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+    }}
+  ></div>
+</div>
 
-
-       {
-        getBoys?.length>0?
-        getBoys.map((item)=>(
-       
-       <tr>
-          <td>1</td>
-          <td>{item.boyname}</td>
-          <td>{item.boylocation}</td>
-          <td>{item.boynumber}</td>
-          {/* <td>{item.status}</td> */}
-        
-            <td>  <Edit candy={item}/> </td>
-            
-            <tr> <Button style={{padding:'2px'}} className="mt-2" variant="danger">Block</Button></tr>
-            <td><i onClick={()=>handledelete(item._id)} class="fa-solid fa-trash" Style="color:rgb(245, 54, 92);"></i></td>
-
-
-  
-        
-        </tr>
-        )):
-        null
-       }
-      </tbody>
-    </Table>
+                    </td>
+                       <td>{item.restime}</td>
+                    <td className="text-right">
+                      {/* <UncontrolledDropdown>
+                        <DropdownToggle
+                          className="btn-icon-only text-light"
+                          href="#pablo"
+                          role="button"
+                          size="sm"
+                          color=""
+                          onClick={(e) => e.preventDefault()}
+                        >
+                          <i className="fas fa-ellipsis-v" />
+                        </DropdownToggle>
+                        <DropdownMenu className="dropdown-menu-arrow" right>
+                        <Link to="/demo">
+                          <DropdownItem
+                            href="#pablo"
+                            // onClick={(e) => e.preventDefault()}
+                          >
+                            Action
+                          </DropdownItem>
+                          </Link>
+                          
+                        </DropdownMenu>
+                      </UncontrolledDropdown> */}
+                      <Edit candy={item} />
+                    </td>
+                    <td> <Button
+                  onClick={() => handleBlock(item._id)}
+                  disabled={loading}
+                  style={{
+                    padding: '2px',
+                    backgroundColor: 'rgb(220, 35, 67)',
+                    borderColor: 'rgb(220, 35, 67)',
+                  }}
+                  className="mt-2"
+                >
+                  Block
+                </Button></td>
+                    <td><i onClick={() => handledelete(item._id)} class="fa-solid fa-trash"></i></td>
+                  </tr>
+                  ))
+                :null}
+                
+                 
+                
+                 
+                </tbody>
+              </Table>
+            </Card>
+          </div>
+        </Row>
           </div>
         </Row>
 

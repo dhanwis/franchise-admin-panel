@@ -50,6 +50,21 @@ export const updateRestaurantAPI=async(resid,reqbody,reqheader)=>{
   
   }
 
+  // /delete restaurant
+export const deleteRestaurantAPI=async(resid,reqheader)=>{
+    return  await commonAPI('DELETE',`${BASE_URL}/restaurants/remove/${resid}`,reqheader)
+  
+  
+  }
+
+
+  // block delivery boy
+
+  export const BlockAPI=async(boyId)=>{
+    return  await commonAPI('PUT',`${BASE_URL}/deliveryboys/block-deliveryboy/${boyId}`)
+    
+  }
+
 
   
 

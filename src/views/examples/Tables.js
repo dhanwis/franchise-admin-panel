@@ -28,10 +28,11 @@ import { addRestaurantAPI } from "Services/allAPI";
 import Swal from "sweetalert2";
 import { getallRestaurantAPI } from "Services/allAPI";
 import { BASE_URL } from "Services/baseUrl";
-import { addpetresponsecontext } from "./ContextShare";
+import { addpetresponsecontext, addrestaurantresponsecontext } from "./ContextShare";
 
 
 import exampleImage from 'images/pngegg.png';
+import { deleteRestaurantAPI } from "Services/allAPI";
 
 const Tables = () => {
 
@@ -51,6 +52,8 @@ console.log(addRestaurant);
 const [preview,setpreview]=useState("")
 console.log(preview);
 const{addpetresponse,setaddpetresponse}=useContext(addpetresponsecontext)
+const{addrestaurantresponse,setaddrestaurantresponse}=useContext(addrestaurantresponsecontext)
+
 
 
 
@@ -77,7 +80,12 @@ const handleaddRestaurant=async(e)=>{
     !restime ||
     !resimage
    ){
-      alert('please fill the for completely')
+    Swal.fire({
+      title: "Please fill the form completely",
+    
+      icon: "warning",
+      
+    })
     }
     else{
       // reqbody
@@ -115,6 +123,12 @@ const reqheader={
             popup: 'animate__animated animate__fadeOutUp'
           }
         })
+
+        setviewRestaurant((prevrestaurant)=>[...prevrestaurant,result.data])
+
+
+
+
         setAddRestaurants({
           resname:"",
           reslocation:"",
@@ -134,6 +148,7 @@ const reqheader={
   const [viewRestaurant,setviewRestaurant]=useState([])
 
 
+
   const gethomeRestaurant=async()=>{
     const result= await getallRestaurantAPI()
     console.log(result.data);
@@ -144,7 +159,21 @@ const reqheader={
   }
 useEffect(()=>{
     gethomeRestaurant()
-  },[addpetresponse])
+  },[addrestaurantresponse,addpetresponse])
+
+
+  const handledelete = async (id) => {
+    const reqheader = {
+      'Content-Type': 'application/json',
+      
+    };
+    const result = await deleteRestaurantAPI(id, reqheader);
+    if (result.status === 200) {
+      gethomeRestaurant()
+    } else {
+      console.log(result.response.data);
+    }
+  };
 
 
 
@@ -264,9 +293,9 @@ useEffect(()=>{
           <div className="col">
             <Card className="bg-default shadow">
               <CardHeader className="bg-transparent border-0">
-                <h3 className="text-white mb-0">Our Restaurants</h3>
+                <h3 className="text-white mb-0">Restaurants</h3>
               </CardHeader>
-              <Table
+              <Table 
                 className="align-items-center table-dark table-flush"
                 responsive
               >
@@ -278,6 +307,7 @@ useEffect(()=>{
                     <th scope="col">Phone</th>
                     <th scope="col">Image</th>
                     <th scope="col">Working Time</th>
+                    <th scope="col"></th>
                     <th scope="col" />
                   </tr>
                 </thead>
@@ -356,6 +386,8 @@ useEffect(()=>{
                       </UncontrolledDropdown> */}
                       <Demo comp={item} />
                     </td>
+                    <td><Button style={{padding:'2px',backgroundColor:'rgb(220, 35, 67)',borderColor:'rgb(220, 35, 67)'}} className="mt-2" >Block</Button></td>
+                    <td><i onClick={() => handledelete(item._id)}  class="fa-solid fa-trash"></i></td>
                   </tr>
                   ))
                 :null}

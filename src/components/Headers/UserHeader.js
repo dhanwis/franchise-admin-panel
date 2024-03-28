@@ -1,20 +1,23 @@
 
 import { Button, Container, Row, Col } from "reactstrap";
+import myImage from 'images/wp1874191.jpg';
 
 
 const UserHeader = () => {
   return (
     <>
-      <div
-        className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-        style={{
-          minHeight: "600px",
-          backgroundImage: `url('https://wallpapercave.com/wp/wp1874191.jpg')`
-           ,
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
-        }}
-      >
+     <div
+      className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+      style={{
+        minHeight: "600px",
+        backgroundImage: `url(${myImage})`, // Use myImage variable here
+        backgroundSize: "cover",
+        backgroundPosition: "center top",
+      }}
+    >
+      {/* Content of your component */}
+  
+
         {/* Mask */}
         <span className="mask bg-gradient-default opacity-8" />
         {/* Header container */}
