@@ -55,7 +55,6 @@ export const getallRestaurantAPI = async (franchiseId) => {
 };
 
 // edit restaurant
-<<<<<<< HEAD
 export const updateRestaurantAPI=async(resid,reqbody,reqheader)=>{
     return  await commonAPI('PUT',`${BASE_URL}/restaurants/update/${resid}`,reqbody,reqheader)
   
@@ -80,13 +79,3 @@ export const deleteRestaurantAPI=async(resid,reqheader)=>{
 
   
 
-=======
-export const updateRestaurantAPI = async (resid, reqbody, reqheader) => {
-  return await commonAPI(
-    "PUT",
-    `${BASE_URL}/restaurants/update/${resid}`,
-    reqbody,
-    reqheader
-  );
-};
->>>>>>> 2d1354b8f57fb53d4e205c63c7fb991a8e9c7cdd

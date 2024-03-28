@@ -30,14 +30,8 @@ import { getallRestaurantAPI } from "Services/allAPI";
 import { BASE_URL } from "Services/baseUrl";
 import { addpetresponsecontext, addrestaurantresponsecontext } from "./ContextShare";
 
-<<<<<<< HEAD
-
-import exampleImage from 'images/pngegg.png';
-import { deleteRestaurantAPI } from "Services/allAPI";
-=======
 import exampleImage from "images/pngegg.png";
 import { AuthContext } from "contexts/authContext";
->>>>>>> 2d1354b8f57fb53d4e205c63c7fb991a8e9c7cdd
 
 const Tables = () => {
   const { user } = useContext(AuthContext);
@@ -58,56 +52,11 @@ const Tables = () => {
     addpetresponsecontext
   );
 
-<<<<<<< HEAD
-
-
-
-})
-console.log(addRestaurant);
-const [preview,setpreview]=useState("")
-console.log(preview);
-const{addpetresponse,setaddpetresponse}=useContext(addpetresponsecontext)
-const{addrestaurantresponse,setaddrestaurantresponse}=useContext(addrestaurantresponsecontext)
-
-
-
-
-
-useEffect(()=>{
-  if(addRestaurant.resimage)
-  {(setpreview(URL.createObjectURL(addRestaurant.resimage)))}
-  else{
-    setpreview("")
-  }
-
-
-},[addRestaurant.resimage])
-
-
-const handleaddRestaurant=async(e)=>{
-  e.preventDefault()
-  const { resname,reslocation, resaddress, resphone,restime, resimage}=addRestaurant
-
-  if( !resname ||
-    !reslocation ||
-    !resaddress ||
-    !resphone ||
-    !restime ||
-    !resimage
-   ){
-    Swal.fire({
-      title: "Please fill the form completely",
-    
-      icon: "warning",
-      
-    })
-=======
   useEffect(() => {
     if (addRestaurant.resimage) {
       setpreview(URL.createObjectURL(addRestaurant.resimage));
     } else {
       setpreview("");
->>>>>>> 2d1354b8f57fb53d4e205c63c7fb991a8e9c7cdd
     }
   }, [addRestaurant.resimage]);
 
@@ -152,21 +101,9 @@ const handleaddRestaurant=async(e)=>{
             popup: "animate__animated animate__fadeInDown",
           },
           hideClass: {
-<<<<<<< HEAD
-            popup: 'animate__animated animate__fadeOutUp'
-          }
-        })
-
-        setviewRestaurant((prevrestaurant)=>[...prevrestaurant,result.data])
-
-
-
-
-=======
             popup: "animate__animated animate__fadeOutUp",
           },
         });
->>>>>>> 2d1354b8f57fb53d4e205c63c7fb991a8e9c7cdd
         setAddRestaurants({
           resname: "",
           reslocation: "",
@@ -187,45 +124,12 @@ const handleaddRestaurant=async(e)=>{
     setviewRestaurant(result.data);
   };
 
-<<<<<<< HEAD
-
-  const gethomeRestaurant=async()=>{
-    const result= await getallRestaurantAPI()
-    console.log(result.data);
-    setviewRestaurant(result.data)
-
-    
-
-  }
-useEffect(()=>{
-    gethomeRestaurant()
-  },[addrestaurantresponse,addpetresponse])
-
-
-  const handledelete = async (id) => {
-    const reqheader = {
-      'Content-Type': 'application/json',
-      
-    };
-    const result = await deleteRestaurantAPI(id, reqheader);
-    if (result.status === 200) {
-      gethomeRestaurant()
-    } else {
-      console.log(result.response.data);
-    }
-  };
-
-
-
-  
-=======
   useEffect(() => {
     if (user) {
       gethomeRestaurant(user);
     }
   }, [user]);
 
->>>>>>> 2d1354b8f57fb53d4e205c63c7fb991a8e9c7cdd
   return (
     <>
       <Header />
@@ -445,25 +349,11 @@ useEffect(()=>{
                           
                         </DropdownMenu>
                       </UncontrolledDropdown> */}
-<<<<<<< HEAD
-                      <Demo comp={item} />
-                    </td>
-                    <td><Button style={{padding:'2px',backgroundColor:'rgb(220, 35, 67)',borderColor:'rgb(220, 35, 67)'}} className="mt-2" >Block</Button></td>
-                    <td><i onClick={() => handledelete(item._id)}  class="fa-solid fa-trash"></i></td>
-                  </tr>
-                  ))
-                :null}
-                
-                 
-                
-                 
-=======
                             <Demo comp={item} />
                           </td>
                         </tr>
                       ))
                     : null}
->>>>>>> 2d1354b8f57fb53d4e205c63c7fb991a8e9c7cdd
                 </tbody>
               </Table>
             </Card>
